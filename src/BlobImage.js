@@ -12,7 +12,6 @@ import ZoodNeutralPlus from '../assets/zoods/zood_neutral_plus.png';
 export default function BlobImage({
     large,
     name,
-    gear,
     small,
     beginEat,
     eating,
@@ -29,9 +28,7 @@ export default function BlobImage({
     //console.log(blobs, user.blobColor);
     if (blobData) {
         image = blobData.happyImage;
-        if (gear) {
-            image = blobData.gear;
-        } else if (beginEat) {
+        if (beginEat) {
             image = blobData.beginEatImage;
         } else if (eating) {
             image = blobData.eatImage;
@@ -56,7 +53,7 @@ export default function BlobImage({
             large && styles.large,
             small && styles.small,
         )}>
-            {!gear && <img src={large ? BlobBackgroundLarge : BlobBackground} />}
+            <img src={large ? BlobBackgroundLarge : BlobBackground} />
             <img
                 className={classnames(
                     !large && styles.wrappedImage,

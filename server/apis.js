@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/user', async (req, res) => {
     const { identifier } = req.query;
 
-    const user = await User.getForId(identifier);
+    const user = await User.getForIdentifier(identifier);
 
     res.json({
         success: true,
@@ -104,6 +104,10 @@ router.get('/user/hearts', async (req, res) => {
     for (const card of cards) {
         count += card.swipes;
     }
+
+    const user = await User.getForId(id);
+
+    count += user.extra_hearts;
 
     res.json({
         success:true,

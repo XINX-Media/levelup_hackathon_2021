@@ -5,7 +5,7 @@ class UserTable extends DatabaseTable {
         return 'user';
     }
 
-    static async getForId(identifier) {
+    static async getForIdentifier(identifier) {
         const users = await UserTable.select({
             identifier,
         });
@@ -16,6 +16,23 @@ class UserTable extends DatabaseTable {
 
         const user = users[0];
         user.hasOnboarded = Boolean(user.hasOnboarded);
+        user.extra_hearts = parseInt(user.extra_hearts, 10);
+        
+        return user;
+    }
+
+    static async getForId(id) {
+        const users = await UserTable.select({
+            id,
+        });
+
+        if (users.length === 0) {
+            return null;
+        }
+
+        const user = users[0];
+        user.hasOnboarded = Boolean(user.hasOnboarded);
+        user.extra_hearts = parseInt(user.extra_hearts, 10);
         
         return user;
     }
@@ -25,7 +42,7 @@ class UserTable extends DatabaseTable {
             identifier,
         });
 
-        return this.getForId(identifier);
+        return this.getForIdentifier(identifier);
     }
 
     static async updateUser(identifier, changes) {
@@ -38,7 +55,7 @@ class UserTable extends DatabaseTable {
             identifier,
         }, changes);
 
-        return this.getForId(identifier);
+        return this.getForIdentifier(identifier);
     }
 }
 

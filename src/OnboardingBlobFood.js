@@ -70,6 +70,7 @@ export default function OnboardingBlobFood({ user, setUser, goBack }) {
                                     identifier: user.identifier,
                                     changes: {
                                         hasOnboarded: true,
+                                        extra_hearts: 1,
                                     }
                                 });
                                 setUser(result.user);

@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { callApi } from '../Api';
+import React, { useContext } from 'react';
 
 import HeartOne from '../../assets/heart_one.png';
 import HeartTwo from '../../assets/heart_two.png';
@@ -11,25 +10,10 @@ import HeartSix from '../../assets/heart_six.png';
 import styles from './styles.css';
 import mainStyles from '../styles.css';
 
-import UserContext from '../contexts/UserContext';
+import HeartsContext from '../contexts/HeartsContext';
 
 export default function StackedHearts() {
-    const { user } = useContext(UserContext);
-    const [hearts, setHearts] = useState(null);
-
-    useEffect(async () => {
-        const result = await callApi("GET", "user/hearts", {
-            id: user.id,
-        });
-
-        setHearts(result.hearts);
-
-        /*setInterval(() => {
-            setHearts((hearts) => {
-                return hearts + 25;
-            });
-        }, 500);*/
-    }, []);
+    const { hearts } = useContext(HeartsContext);
 
     return (
         <div className={styles.heartOuter}>     

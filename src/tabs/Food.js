@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { callApi } from '../Api';
 
 import BlobImage from '../BlobImage';
@@ -11,6 +11,7 @@ import styles from './styles.css';
 import mainStyles from '../styles.css';
 
 import { cards as publicCards } from '../config/cards';
+import HeartsContext from '../contexts/HeartsContext';
 
 export default function Food({ user, setTab }) {
     const [cards, setCards] = useState([]);
@@ -18,6 +19,7 @@ export default function Food({ user, setTab }) {
     const [swipedCardIndex, setSwipedCardIndex] = useState(null);
     const [swipedCardProgress, setSwipedCardProgress] = useState(0);
     const [swipedCardAfter, setSwipedCardAfter] = useState(false);
+    const { refreshHearts } = useContext(HeartsContext);
 
     useEffect(async () => {
         const result = await callApi("GET", "user/cards", {
@@ -44,7 +46,7 @@ export default function Food({ user, setTab }) {
                     }
                     return progress + 1;
                 });
-            }, 50);
+            }, 25);
 
             return () => {
                 clearInterval(interval);
@@ -56,6 +58,7 @@ export default function Food({ user, setTab }) {
         if (swipedCardAfter) {
             const timeout = setTimeout(() => {
                 setSwipedCardAfter(false);
+                refreshHearts();
             }, 500);
 
             return () => {
@@ -116,9 +119,9 @@ export default function Food({ user, setTab }) {
                     )}
                     <CardSwiperTop
                         cards={allCards}
-                        swipeCard={(index) => {
+                        swipeCard={async (index) => {
                             const card = cards[index];
-                            callApi("PATCH", "card", {
+                            await callApi("PATCH", "card", {
                                 id: card.id,
                                 changes: {
                                     swipes: card.swipes + 1,

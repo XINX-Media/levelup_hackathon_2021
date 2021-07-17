@@ -2,7 +2,6 @@
 import OnboardingBlobOne from '../../assets/onboarding_blob_1.png';
 import OnboardingBlobTwo from '../../assets/onboarding_blob_2.png';
 import OnboardingBlobThree from '../../assets/onboarding_blob_3.png';
-import ZoodOneGear from '../../assets/zood_1_gear.png';
 import ZoodYellowBeginEat from '../../assets/zoods/zood_yellow_begin_eat.png';
 import ZoodYellowEat from '../../assets/zoods/zood_yellow_eat.png';
 import ZoodYellowAfterEat from '../../assets/zoods/zood_yellow_after_eat.png';
@@ -43,7 +42,6 @@ export default {
         name: 'Blobana',
         color: '#0ff',
         onboardingSwatch: OnboardingBlobTwo,
-        gear: ZoodOneGear,
         beginEatImage: ZoodYellowBeginEat,
         eatImage: ZoodYellowEat,
         afterEatImage: ZoodYellowAfterEat,

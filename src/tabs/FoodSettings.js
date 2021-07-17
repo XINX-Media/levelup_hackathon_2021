@@ -2,10 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { callApi } from '../Api';
 
 import UserContext from '../contexts/UserContext';
-import BlobImage from '../BlobImage';
 import TrashIcon from '../../assets/trash_icon.svg';
 import BlackHeartRob from '../../assets/black_heart_rob.png';
 import TabWrapper from '../components/TabWrapper';
+import ZoodNeutralGearIcon from '../../assets/zoods/zood_neutral_gear_icon.png';
 
 import styles from './styles.css';
 import mainStyles from '../styles.css';
@@ -29,7 +29,9 @@ export default function FoodSettings({ setTab }) {
         >
             <div>
                 <div className={styles.foodSettingsTopContainer}>
-                    <BlobImage gear small />
+                    <div>
+                        <img src={ZoodNeutralGearIcon} />
+                    </div>
                     <div className={mainStyles.normalText} style={{ marginLeft: '20px' }}>
                         You can view and edit your cards here.
                     </div>

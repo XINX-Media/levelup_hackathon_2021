@@ -28,7 +28,7 @@ export default function Profile({ user, setTab }) {
                     <div className={styles.profileProfileImage}>
                         <img src={EmptyProfileImage} />
                         <div className={mainStyles.instructions}>
-                            name goes here
+                            username
                         </div>
                     </div>
                     <div

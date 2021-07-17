@@ -7,6 +7,7 @@ import BlobBackgroundLarge from '../assets/blob_background_large.png';
 import UserContext from './contexts/UserContext';
 import blobs from './config/blobs';
 import ZoodNeutralOnboarding from '../assets/zoods/zood_neutral_onboarding.png';
+import ZoodNeutralPlus from '../assets/zoods/zood_neutral_plus.png';
 
 export default function BlobImage({
     large,
@@ -18,6 +19,7 @@ export default function BlobImage({
     afterEating,
     blobId,
     onboarding,
+    plus,
 }) {
     const { user } = useContext(UserContext);
     let image;
@@ -42,6 +44,10 @@ export default function BlobImage({
 
     if (blobId === '' && onboarding) {
         image = ZoodNeutralOnboarding;
+    }
+
+    if (plus) {
+        image = ZoodNeutralPlus;
     }
 
     return (

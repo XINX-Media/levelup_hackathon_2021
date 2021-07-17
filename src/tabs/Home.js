@@ -60,9 +60,12 @@ export default function Home({ user, setTab }) {
                         icon={DoodButtonIcon}
                         backgroundColor="#f6cf69"
                         large
+                        onClick={() => {
+                            setTab('zoodies');
+                        }}
                     />
                     <div className={mainStyles.instructions} style={{marginTop: '5px'}}>
-                        Dood
+                        Zoodies
                     </div>
                 </div>
                 <div className={styles.homeButtonContainer}>

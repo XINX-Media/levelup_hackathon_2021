@@ -4,7 +4,7 @@ import styles from './styles.css';
 
 import Arrow from '../assets/onboarding_button_arrow.svg';
 
-export default function OnboardingButon({ onClick, text }) {
+export default function OnboardingButton({ onClick, text }) {
     return (
         <div
             className={styles.onboardingButtonOuter}

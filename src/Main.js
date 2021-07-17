@@ -6,9 +6,10 @@ import Wood from './tabs/Wood';
 import Mood from './tabs/Mood';
 import Profile from './tabs/Profile';
 import FoodSettings from './tabs/FoodSettings';
+import Zoodies from './tabs/Zoodies';
 
 export default function Main({ user }) {
-	const [tab, setTab] = useState('food');
+	const [tab, setTab] = useState('home');
 
     if (tab === "home") {
         return <Home
@@ -35,6 +36,10 @@ export default function Main({ user }) {
         />
     } else if (tab === "food_settings") {
         return <FoodSettings
+            setTab={setTab}
+        />
+    } else if (tab === "zoodies") {
+        return <Zoodies
             setTab={setTab}
         />
     }

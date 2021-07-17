@@ -67,12 +67,12 @@ export default function OnboardingBlob({ user, setUser, onForward }) {
                                 styles.onboardingBlobColor,
                                 blob === id && styles.selected,
                             )}
-                            style={{
-                                backgroundColor: blobs[id].color,
-                            }}
                         >
-                            {blobs[id].onboardingSwatch && (
+                            {blobs[id].onboardingSwatch && blob !== id && (
                                 <img src={blobs[id].onboardingSwatch} />
+                            )}
+                            {blobs[id].onboardingSwatchSelected && blob === id && (
+                                <img src={blobs[id].onboardingSwatchSelected} />
                             )}
                         </div>;
                     })}

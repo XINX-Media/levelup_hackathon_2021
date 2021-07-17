@@ -1,0 +1,341 @@
+@font-face {
+	font-family: Ranille;
+	src: url(../assets/Ranille.otf);
+}
+
+.appRoot {
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	width: 100%;
+	min-height: 100%;
+}
+
+.cardSwiperOuter {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.cardSwiperInner {
+	position: relative;
+}
+
+.cardSwiperCard {
+	width: calc(100% - 42px);
+	position: absolute;
+	padding: 20px;
+	height: calc(100% - 42px);
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.cardSwiperCardFixed {
+	width: calc(100% - 42px);
+	padding: 20px;
+	height: calc(100% - 42px);
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.onboardingBlobOuter {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	margin: 0 30px;
+}
+
+.blobMainImage {
+	width: 160px;
+	height: 160px;
+	background-color: transparent;
+	border-radius: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.blobMainImage.large {
+	width: 220px;
+	height: 220px;
+	border-radius: 200px;
+}
+
+.blobMainImage.small {
+	width: 89px;
+	height: 60px;
+}
+
+.blobImageNameHolder {
+	position: absolute;
+	bottom: 20px;
+}
+
+.onboardingBlobColorHolder {
+	display: flex;
+	position: relative;
+	width: 220px;
+	height: 85px;
+}
+
+.onboardingBlobColor {
+	width: 60px;
+	height: 60px;
+	border-radius: 60px;
+	cursor: pointer;
+	position: absolute;
+}
+
+.onboardingBlobColor:nth-of-type(1) {
+	top: -5px;
+}
+
+.onboardingBlobColor:nth-of-type(2) {
+	left: 80px;
+	top: 20px;
+}
+
+.onboardingBlobColor:nth-of-type(1) {
+	top: -5px;
+	right: 0;
+}
+
+.onboardingBlobColor.selected {
+	border: 1px solid black;
+}
+
+.onboardingBlobImageHolder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.onboardingButtonOuter {
+	width: 100%;
+}
+
+.onboardingButtonInner {
+	width: calc(100% - 80px);
+	position: relative;
+	background-color: #5d6fcb;
+	cursor: pointer;
+	padding: 15px 30px;
+	border-radius: 10px;
+	color: #fff;
+}
+
+.onboardingButtonOuterRight {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	cursor: pointer;
+	border-radius: 60px;
+	right: -20px;
+	top: -1px;
+	background-color: #a9b0d6;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.onboardingBlobFoodOuter {
+	min-height: 100vh;
+	display: flex;
+}
+
+.onboardingBlobFoodInner {
+	padding-top: 111px;
+	position: relative;
+	display: flex;
+	flex-grow: 1;
+}
+
+.onboardingBlobFoodContent {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	background-color: #fff;
+	flex-grow: 1;
+}
+
+.onboardingBlobFoodCardOuter {
+	margin-top: 19px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.onboardingBlobFoodBottom {
+	height: 48px;
+	background-color: #5d6fcb;
+	width: 100%;
+	display: flex;
+	position: absolute;
+	flex-direction: column;
+	align-items: center;
+	bottom: 0;
+	margin-top: 10px;
+}
+
+.onboardingBlobFoodButton {
+	width: 50px;
+	height: 50px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 60px;
+	background-color: #fff;
+}
+
+.onboardingBlobFoodBottomInner {
+	position: absolute;
+	top: -30px;
+	width: 100%;
+	display: flex;
+	position: relative;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.onboardingBlobFoodModalOuter {
+	width: 220px;
+	height: 328px;
+	position: absolute;
+	bottom: 31px;
+	background-color: #e5e8f5;
+	top: 168px;
+	padding: 40px 36px;
+	border-radius: 9px;
+}
+
+.iconButtonOuter {
+	cursor: pointer;
+	border-radius: 60px;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.iconButtonOuter.large {
+	width: 90px;
+	height: 90px;
+}
+
+.cardSwiperTopOuter {
+	position: relative;
+	width: 300px;
+	display: flex;
+	justify-content: center;
+}
+
+.cardSwiperTopActiveCardHolder {
+	width: 220px;
+	height: 220px;
+	position: relative;
+	z-index: 2;
+}
+
+.cardSwiperTopInactiveCardHolder {
+	width: 160px;
+	height: 160px;
+	position: absolute;
+	opacity: 0.5;
+	z-index: 0;
+	top: 30px;
+}
+
+
+
+
+
+.heading {
+	font-family: Ranille, sans-serif;
+	font-weight: 400;
+	font-size: 36px;
+	line-height: 36px;
+}
+
+.constraints {
+	font-family: Montserrat, sans-serif;
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 14px;
+}
+
+.instructions {
+	font-family: Montserrat, sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 17px;
+}
+
+.normalText {
+	font-family: Ranille, sans-serif;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 18px;
+}
+
+.subheading {
+	font-family: Ranille, sans-serif;
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 24px;
+}
+
+.title {
+	font-family: Ranille, sans-serif;
+	font-weight: 400;
+	font-size: 48px;
+	line-height: 48px;
+}
+
+.input {
+	border: none;
+	border-bottom: 1px solid #c4c4c4;
+	font-size: 18px;
+	width: 100%;
+	text-align: center;
+	padding-bottom: 6px;
+}
+
+.wrappedImage {
+	max-width: 90%;
+	max-height: 90%;
+}
+
+.wrappedImageSmaller {
+	max-width: 80%;
+	max-height: 80%;
+}
+
+.modalOuter {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0,0,0,0.25);
+	top: 0;
+	left: 0;
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+}
+
+.textarea {
+	border: none;
+	width: 100%;
+	height: 100%;
+}

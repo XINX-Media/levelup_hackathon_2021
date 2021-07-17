@@ -19,7 +19,7 @@ export async function callApi(method, api, params = {}) {
             const paramUrl = paramsList.join("&");
             url += "?" + paramUrl;
         }
-    } else if (method === 'POST' || method === "PATCH") {
+    } else if (method === 'POST' || method === "PATCH" || method === "PUT") {
         options.headers['Content-Type'] = 'application/json';
         options.body = JSON.stringify(params);
     }

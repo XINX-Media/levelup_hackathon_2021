@@ -21,6 +21,9 @@ class DatabaseTable {
         const paramStrings = Object.keys(search).map((key) => {
             const value = search[key];
             params.push(value);
+            if (value === null) {
+                return `${key} is ?`;
+            }
             return `${key} = ?`;
         });
         if (paramStrings.length > 0) {

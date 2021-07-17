@@ -69,6 +69,7 @@ export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCar
                                     x: clientX,
                                     y: clientY,
                                 });
+                                e.preventDefault();
                             }}
                             onMouseDown={(e) => {
                                 const { clientX, clientY } = e;
@@ -87,7 +88,8 @@ export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCar
                                 setRot(0);
                             }}
                             onTouchMove={(e) => {
-                                if (mouseDownCoord) {                      
+                                if (mouseDownCoord) {  
+                                    e.preventDefault();                    
                                     const { clientX, clientY } = e.changedTouches[0];
 
                                     const dist = Math.sqrt(Math.pow(mouseDownCoord.y - clientY, 2) + Math.pow(mouseDownCoord.x - clientX, 2));

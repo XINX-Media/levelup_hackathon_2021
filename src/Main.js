@@ -7,6 +7,7 @@ import Mood from './tabs/Mood';
 import Profile from './tabs/Profile';
 import FoodSettings from './tabs/FoodSettings';
 import Zoodies from './tabs/Zoodies';
+import ZoodiesFoodies from './tabs/ZoodiesFoodies';
 
 export default function Main({ user }) {
 	const [tab, setTab] = useState('home');
@@ -40,6 +41,10 @@ export default function Main({ user }) {
         />
     } else if (tab === "zoodies") {
         return <Zoodies
+            setTab={setTab}
+        />
+    } else if (tab === "zoodies_foodies") {
+        return <ZoodiesFoodies
             setTab={setTab}
         />
     }

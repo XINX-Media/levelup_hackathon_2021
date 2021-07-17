@@ -115,4 +115,121 @@ router.get('/user/hearts', async (req, res) => {
     });
 });
 
+router.post("/user/connect", async (req, res) => {
+    const { id } = req.body;
+
+    const user = await User.getForId(id);
+    if (user.paired_user_id) {
+        // if we already have a paired user, then just return the user
+        res.json({
+            success:true,
+            user,
+        });
+    } else {
+        // let's try to find a valid user
+        const pairableUsers = (await User.getPairableUsers()).filter(({ id: otherId }) => {
+            return id != otherId;
+        });
+
+        let pairableUser = null;
+        if (pairableUsers.length > 0) {
+            pairableUser = pairableUsers[0].id;
+
+            // update the paired user
+            const newUser = await User.updateUser(pairableUsers[0].identifier, {
+                paired_user_id: user.id,
+            });
+        }
+
+        const changes = {
+            ok_to_pair: true,
+            paired_user_id: pairableUser,
+        };
+
+        const newUser = await User.updateUser(user.identifier, changes);
+
+        res.json({
+            success:true,
+            user: newUser,
+        });
+    }
+});
+
+router.get("/user/connect", async (req, res) => {
+    const { id } = req.query;
+
+    const user = await User.getForId(id);
+
+    if (!user) {
+        res.json({
+            success: false,
+            message: 'No such user',
+        });
+        return;
+    }
+
+    if (!user.paired_user_id) {
+        res.json({
+            success: false,
+            message: 'No paired user id',
+        });
+        return;
+    }
+
+    const pairedUser = await User.getForId(user.paired_user_id);
+
+    if (!pairedUser) {
+        res.json({
+            success: false,
+            message: 'Paired user does not exist',
+        });
+        return;
+    }
+
+    res.json({
+        success: true,
+        user: pairedUser,
+    });
+});
+
+router.put("/user/connect/give_heart", async (req, res) => {
+    const { id } = req.body;
+
+    const user = await User.getForId(id);
+
+    if (!user) {
+        res.json({
+            success: false,
+            message: 'No such user',
+        });
+        return;
+    }
+
+    if (!user.paired_user_id) {
+        res.json({
+            success: false,
+            message: 'No paired user id',
+        });
+        return;
+    }
+
+    const pairedUser = await User.getForId(user.paired_user_id);
+
+    if (!pairedUser) {
+        res.json({
+            success: false,
+            message: 'Paired user does not exist',
+        });
+        return;
+    }
+
+    await User.updateUser(pairedUser.identifier, {
+        extra_hearts: pairedUser.extra_hearts + 1,
+    });
+
+    res.json({
+        success: true,
+    });
+});
+
 module.exports = router;

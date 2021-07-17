@@ -5,6 +5,18 @@ class UserTable extends DatabaseTable {
         return 'user';
     }
 
+    static processUser(rawUser) {
+        const user = {
+            ...rawUser,
+        };
+
+        user.hasOnboarded = Boolean(user.hasOnboarded);
+        user.extra_hearts = parseInt(user.extra_hearts, 10);
+        user.ok_to_pair = Boolean(user.ok_to_pair);
+
+        return user;
+    }
+
     static async getForIdentifier(identifier) {
         const users = await UserTable.select({
             identifier,
@@ -14,9 +26,7 @@ class UserTable extends DatabaseTable {
             return null;
         }
 
-        const user = users[0];
-        user.hasOnboarded = Boolean(user.hasOnboarded);
-        user.extra_hearts = parseInt(user.extra_hearts, 10);
+        const user = this.processUser(users[0]);
         
         return user;
     }
@@ -30,9 +40,7 @@ class UserTable extends DatabaseTable {
             return null;
         }
 
-        const user = users[0];
-        user.hasOnboarded = Boolean(user.hasOnboarded);
-        user.extra_hearts = parseInt(user.extra_hearts, 10);
+        const user = this.processUser(users[0]);
         
         return user;
     }
@@ -46,7 +54,7 @@ class UserTable extends DatabaseTable {
     }
 
     static async updateUser(identifier, changes) {
-        const user = this.getForId(identifier);
+        const user = await this.getForIdentifier(identifier);
         if (!user) {
             return null;
         }
@@ -56,6 +64,17 @@ class UserTable extends DatabaseTable {
         }, changes);
 
         return this.getForIdentifier(identifier);
+    }
+
+    static async getPairableUsers() {
+        const users = await this.select({
+            ok_to_pair: true,
+            paired_user_id: null,
+        });
+
+        return users.map((user) => {
+            return this.processUser(user);
+        });
     }
 }
 

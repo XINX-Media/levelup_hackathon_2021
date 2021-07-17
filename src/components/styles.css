@@ -103,6 +103,7 @@
     background-color: #5d6fcb;
     display: flex;
     justify-content: center;
+    z-index: 4;
 }
 
 .tabWrapperNavInner {

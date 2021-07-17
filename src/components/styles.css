@@ -82,3 +82,33 @@
     z-index: 1;
     right: -4px;
 }
+
+.tabWrapperOuter {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabWrapperContent {
+    width: 100vw;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.tabWrapperNavOuter {
+    height: 50px;
+    flex-shrink: 0;
+    position: relative;
+    background-color: #5d6fcb;
+    display: flex;
+    justify-content: center;
+}
+
+.tabWrapperNavInner {
+    width: 260px;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: -25px;
+}

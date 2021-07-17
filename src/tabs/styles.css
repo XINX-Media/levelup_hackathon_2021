@@ -34,7 +34,6 @@
 }
 
 .foodOuter {
-    min-height: 100vh;
     display: flex;
     align-items: center;
     position: relative;
@@ -47,6 +46,14 @@
     left: 40px;
 }
 
+.foodFloatingCardHolder {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    z-index: 4;
+    top: 140px;
+}
+
 .foodSettingsContainer {
     position: absolute;
     top: 28px;
@@ -54,7 +61,7 @@
     cursor: pointer;
 }
 
-.settingsOuter {
+.profileOuter {
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -62,27 +69,27 @@
     flex-direction: column;
 }
 
-.settingsImageHolder {
+.profileImageHolder {
     width: 221px;
     position: relative;
     margin-top: 30px;
 }
 
-.settingsProfileImage {
+.profileProfileImage {
     padding: 8px;
     width: 84px;
     height: 84px;
     position: absolute;
-    right: 0;
-    bottom: -15px;
+    right: -10px;
+    bottom: -23px;
 }
 
-.settingsProfileImage img {
+.profileProfileImage img {
     width: 84px;
     height: 84px;
 }
 
-.settingsButtonHolder {
+.profileButtonHolder {
     margin-top: 54px;
     background-color: #a9b0d6;
     width: calc(100% - 30px);
@@ -90,7 +97,7 @@
     padding: 30px 15px;
 }
 
-.settingsButton {
+.profileButton {
     padding: 25px;
     border-radius: 10px;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.25);

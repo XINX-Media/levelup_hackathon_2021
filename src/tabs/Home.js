@@ -36,7 +36,7 @@ export default function Home({ user, setTab }) {
                     <IconButton
                         icon={YooButtonIcon} 
                         onClick={() => {
-                            setTab('settings');
+                            setTab('profile');
                         }}
                     />
                     <div className={mainStyles.instructions} style={{marginTop: '5px'}}>

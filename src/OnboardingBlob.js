@@ -52,7 +52,10 @@ export default function OnboardingBlob({ user, setUser, onForward }) {
                 }}
                 className={styles.onboardingBlobImageHolder}
             >
-                <BlobImage />
+                <BlobImage
+                    blobId={blob}
+                    onboarding
+                />
                 <div className={styles.onboardingBlobColorHolder}>
                     {Object.keys(blobs).map((id) => {
                         return <div
@@ -68,8 +71,8 @@ export default function OnboardingBlob({ user, setUser, onForward }) {
                                 backgroundColor: blobs[id].color,
                             }}
                         >
-                            {blobs[id].image && (
-                                <img src={blobs[id].image} />
+                            {blobs[id].onboardingSwatch && (
+                                <img src={blobs[id].onboardingSwatch} />
                             )}
                         </div>;
                     })}

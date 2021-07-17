@@ -2,20 +2,46 @@ import React, { useContext } from 'react';
 import classnames from 'classnames';
 
 import styles from './styles.css';
-import ZoodOne from '../assets/zood_1_smile.gif';
 import BlobBackground from '../assets/blob_background.png';
 import BlobBackgroundLarge from '../assets/blob_background_large.png';
 import UserContext from './contexts/UserContext';
 import blobs from './config/blobs';
+import ZoodNeutralOnboarding from '../assets/zoods/zood_neutral_onboarding.png';
 
-export default function BlobImage({ large, name, gear, small }) {
+export default function BlobImage({
+    large,
+    name,
+    gear,
+    small,
+    beginEat,
+    eating,
+    afterEating,
+    blobId,
+    onboarding,
+}) {
     const { user } = useContext(UserContext);
-    let image = ZoodOne;
-    const blobData = blobs[user.blobColor];
+    let image;
+    const id = blobId || user.blobColor;
+    const blobData = blobs[id];
 
     //console.log(blobs, user.blobColor);
-    if (gear && blobData) {
-        image = blobData.gear;
+    if (blobData) {
+        image = blobData.happyImage;
+        if (gear) {
+            image = blobData.gear;
+        } else if (beginEat) {
+            image = blobData.beginEatImage;
+        } else if (eating) {
+            image = blobData.eatImage;
+        } else if (afterEating) {
+            image = blobData.afterEatImage;
+        } else if (onboarding) {
+            image = blobData.onboardingImage;
+        }
+    }
+
+    if (blobId === '' && onboarding) {
+        image = ZoodNeutralOnboarding;
     }
 
     return (

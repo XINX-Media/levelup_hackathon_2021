@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import styles from './styles.css';
 
-export default function CardSwiperTop({ cards, swipeCard, onOutOfCards }) {
+export default function CardSwiperTop({ cards, swipeCard, onOutOfCards, onCardDragBegin, onCardDragEnd }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [top, setTop] = useState(0);
     const [mouseDownCoord, setMouseDownCoord] = useState(null);
@@ -24,12 +24,12 @@ export default function CardSwiperTop({ cards, swipeCard, onOutOfCards }) {
     }
 
     const changeTop = (newTop) => {
-        if (Math.abs(newTop) >= maxTop) {
+        if (Math.abs(newTop) >= maxTop && activeIndex < cards.length) {
             swipeCard(activeIndex);
             setTop(0);
             setMouseDownCoord(null);
             const nextIndex = activeIndex + 1;
-            if (nextIndex >= cards.length) {
+            if (nextIndex >= cards.length && onOutOfCards) {
                 onOutOfCards();
             }
             setActiveIndex(nextIndex);
@@ -59,6 +59,9 @@ export default function CardSwiperTop({ cards, swipeCard, onOutOfCards }) {
                             x: clientX,
                             y: clientY,
                         });
+                        if (onCardDragBegin && activeIndex < cards.length) {
+                            onCardDragBegin();
+                        }
                     }}
                     onMouseDown={(e) => {
                         const { clientX, clientY } = e;
@@ -67,14 +70,23 @@ export default function CardSwiperTop({ cards, swipeCard, onOutOfCards }) {
                             y: clientY,
                         });
                         e.preventDefault();
+                        if (onCardDragBegin && activeIndex < cards.length) {
+                            onCardDragBegin();
+                        }
                     }}
                     onMouseUp={(e) => {
                         setMouseDownCoord(null);
                         setTop(0);
+                        if (onCardDragEnd) {
+                            onCardDragEnd();
+                        }
                     }}
                     onTouchEnd={(e) => {
                         setMouseDownCoord(null);
                         setTop(0);
+                        if (onCardDragEnd) {
+                            onCardDragEnd();
+                        }
                     }}
                     onTouchMove={(e) => {
                         if (mouseDownCoord) {                      

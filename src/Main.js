@@ -4,11 +4,11 @@ import Home from './tabs/Home';
 import Food from './tabs/Food';
 import Wood from './tabs/Wood';
 import Mood from './tabs/Mood';
-import Settings from './tabs/Settings';
+import Profile from './tabs/Profile';
 import FoodSettings from './tabs/FoodSettings';
 
 export default function Main({ user }) {
-	const [tab, setTab] = useState('food_settings');
+	const [tab, setTab] = useState('food');
 
     if (tab === "home") {
         return <Home
@@ -28,8 +28,8 @@ export default function Main({ user }) {
         return <Mood
             setTab={setTab}
         />;
-    } else if (tab === "settings") {
-        return <Settings
+    } else if (tab === "profile") {
+        return <Profile
             user={user}
             setTab={setTab}
         />

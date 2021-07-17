@@ -1,0 +1,10 @@
+.onboardingBlobFoodModalOuter {
+	width: 220px;
+	height: 328px;
+	position: absolute;
+	bottom: 31px;
+	background-color: #e5e8f5;
+	top: 168px;
+	padding: 40px 36px;
+	border-radius: 9px;
+}

@@ -13,6 +13,9 @@ import { cards as publicCards } from '../config/cards';
 import CardSwiperTop from '../CardSwiperTop';
 import HeartsContext from '../contexts/HeartsContext';
 import StarImage from '../../assets/star_image.svg';
+import FoodButtonIcon from '../../assets/food_button_icon.svg';
+import WooButtonIcon from '../../assets/woo_button_icon.svg';
+import ZoodNeutralSmile from '../../assets/zoods/zood_neutral_smile.png';
 
 const starList = [
     { x: 11, y: 116 },
@@ -106,9 +109,18 @@ export default function ZoodiesFoodies({ setTab }) {
 
     return (
         <TabWrapper
-            onLeftClicked={() => {
+            onMiddleClicked={() => {
                 setTab('home');
             }}
+            onLeftClicked={() => {
+                setTab('map');
+            }}
+            onRightClicked={() => {
+                setTab('food');
+            }}
+            leftIcon={WooButtonIcon}
+            middleIcon={ZoodNeutralSmile}
+            rightIcon={FoodButtonIcon}
         >
             <div className={styles.zoodiesTopOuter} style={{ padding: '0px 11px', paddingBottom: '2px' }}>
                 <img src={ZoodyTopIcon} style={{ height: '70px' }} />

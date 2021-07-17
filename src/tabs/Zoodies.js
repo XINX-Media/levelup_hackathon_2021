@@ -10,6 +10,10 @@ import BlobImage from '../BlobImage';
 import ZoodiesStarBackground from '../../assets/zoodies_star_background.svg';
 import OnboardingButton from '../OnboardingButton';
 import UserContext from '../contexts/UserContext';
+import FoodButtonIcon from '../../assets/food_button_icon.svg';
+import WooButtonIcon from '../../assets/woo_button_icon.svg';
+import ZoodNeutralSmile from '../../assets/zoods/zood_neutral_smile.png';
+import ZoodiesFoodies from './ZoodiesFoodies';
 
 export default function Zoodies({ setTab }) {
     const { user, setUser } = useContext(UserContext);
@@ -21,16 +25,29 @@ export default function Zoodies({ setTab }) {
                 id: user.id,
             });
             setUser(result.user);
-        } else if (user.ok_to_pair && user.paired_user_id) {
-            setTab('zoodies_foodies');
         }
     }, [user.ok_to_pair, user.paired_user_id]);
 
+    if (user.ok_to_pair && user.paired_user_id) {
+        return <ZoodiesFoodies
+            setTab={setTab}
+        />
+    }
+
     return (
         <TabWrapper
-            onLeftClicked={() => {
+            onMiddleClicked={() => {
                 setTab('home');
             }}
+            onLeftClicked={() => {
+                setTab('map');
+            }}
+            onRightClicked={() => {
+                setTab('food');
+            }}
+            leftIcon={WooButtonIcon}
+            middleIcon={ZoodNeutralSmile}
+            rightIcon={FoodButtonIcon}
         >
             <div className={styles.zoodiesTopOuter}>
                 <img src={ZoodyTopIcon} />

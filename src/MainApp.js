@@ -8,7 +8,7 @@ import Onboarding from './Onboarding';
 
 export default function MainApp() {
     const { user, setUser } = useContext(UserContext);
-    const search = useSearch();
+    const { search } = useSearch();
     return (
         <>
             {!search.id && (

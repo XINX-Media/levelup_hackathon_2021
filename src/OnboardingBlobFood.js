@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import classnames from 'classnames';
 import { callApi } from './Api';
 
 import CardSwiper from './CardSwiper';
@@ -8,8 +7,9 @@ import BlobImage from './BlobImage';
 import ArrowRight from '../assets/button_arrow_right.svg';
 import ArrowLeft from '../assets/button_arrow_left.svg';
 import PlusButtonIcon from '../assets/plus_button_icon.svg';
-import OnboardingButton from './OnboardingButton';
 import SeptagonButtonBackground from '../assets/septagon_button_background.svg';
+import Modal from './Modal';
+import AddCardModal from './modals/AddCardModal';
 
 import { onboardingCards as cards } from './config/cards';
 
@@ -17,7 +17,6 @@ import styles from './styles.css';
 
 export default function OnboardingBlobFood({ user, setUser, goBack }) {
     const [showModal, setShowModal] = useState(false);
-    const [popupText, setPopupText] = useState("");
 
     return (
         <div className={styles.onboardingBlobFoodOuter}>
@@ -130,37 +129,13 @@ export default function OnboardingBlobFood({ user, setUser, goBack }) {
                     </div>
                 </div>
                 {showModal && (
-                    <div className={styles.modalOuter}>
-                        <div className={styles.onboardingBlobFoodModalOuter}>
-                            <div className={styles.normalText} style={{textAlign: 'center'}}>
-                                Add a custom card!
-                            </div>
-                            <div style={{ height: '220px', marginTop: '20px', marginBottom: '20px' }}>
-                                <div className={styles.cardSwiperCardFixed}>
-                                    <textarea
-                                        className={classnames(styles.textarea, styles.normalText)}
-                                        onChange={(e) => {
-                                            setPopupText(e.target.value);
-                                        }}
-                                        value={popupText}
-                                    ></textarea>
-                                </div>
-                            </div>
-                            <OnboardingButton
-                                text="Add card!"
-                                onClick={async () => {
-                                    if (popupText !== "") {
-                                        const card = await callApi("POST", "card", {
-                                            user_id: user.id,
-                                            card_text: popupText,
-                                        });
-                                    }
-                                    setPopupText("");
-                                    setShowModal(false);
-                                }}
-                            />
-                        </div>
-                    </div>
+                    <Modal>
+                        <AddCardModal
+                            close={() => {
+                                setShowModal(false);
+                            }}
+                        />
+                    </Modal>
                 )}
             </div>
         </div>

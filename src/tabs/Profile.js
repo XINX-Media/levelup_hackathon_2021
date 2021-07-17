@@ -9,14 +9,23 @@ import styles from './styles.css';
 import mainStyles from '../styles.css';
 import BlobImage from '../BlobImage';
 import StackedHearts from '../components/StackedHearts';
-import SettingsRewardsBackground from '../../assets/settings_rewards_background.png';
 import TabWrapper from '../components/TabWrapper';
+import ZoodNeutralSmile from '../../assets/zoods/zood_neutral_smile.png';
 
 export default function Profile({ user, setTab }) {
     return (
         <TabWrapper
             onLeftClicked={() => {
+                setTab('maps');
+            }}
+            leftIcon={WooButtonIcon}
+            middleIcon={ZoodNeutralSmile}
+            onMiddleClicked={() => {
                 setTab('home');
+            }}
+            rightIcon={FoodButtonIcon}
+            onRightClicked={() => {
+                setTab('food');
             }}
         >
             <div className={styles.profileOuter}>
@@ -44,7 +53,14 @@ export default function Profile({ user, setTab }) {
                 <div className={styles.profileButtonHolder}>
                     <div className={styles.profileButton}>
                         <div style={{ position: 'relative' }}>
-                            <img src={SettingsRewardsBackground} />
+                            <div
+                                style={{
+                                    width: '60px',
+                                    height: '60px',
+                                    backgroundColor: '#5dcbbb',
+                                    borderRadius: '60px',
+                                }}
+                            />
                             <img
                                 src={WooButtonIcon}
                                 style={{
@@ -66,7 +82,7 @@ export default function Profile({ user, setTab }) {
                                 style={{
                                     width: '60px',
                                     height: '60px',
-                                    backgroundColor: '#c4c4c4',
+                                    backgroundColor: '#f09f9c',
                                     borderRadius: '60px',
                                 }}
                             />
@@ -91,7 +107,7 @@ export default function Profile({ user, setTab }) {
                                 style={{
                                     width: '60px',
                                     height: '60px',
-                                    backgroundColor: '#c4c4c4',
+                                    backgroundColor: '#f6cf69',
                                     borderRadius: '60px',
                                 }}
                             />

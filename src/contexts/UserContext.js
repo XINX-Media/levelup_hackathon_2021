@@ -8,7 +8,7 @@ export default UserContext;
 
 export function UserProvider({ children }) {
     const [user, setUser] = useState(null);
-    const search = useSearch();
+    const { search } = useSearch();
 
 	useEffect(async () => {
 		if (search.id) {

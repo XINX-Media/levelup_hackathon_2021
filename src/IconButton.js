@@ -9,6 +9,7 @@ export default function IconButton({
     backgroundColor,
     large,
     backgroundIcon,
+    width,
 }) {
     if (backgroundIcon) {
         return (
@@ -24,7 +25,7 @@ export default function IconButton({
             }}
         >
             <img src={backgroundIcon} />
-            <img style={{ position: 'absolute', top: 0 }} src={icon} />
+            <img style={{ position: 'absolute', top: 0, width, height: width }} src={icon} />
         </div>
         );
     }
@@ -44,7 +45,13 @@ export default function IconButton({
                 }
             }}
         >
-            <img src={icon} />
+            <img
+                src={icon}
+                style={{
+                    width,
+                    height: width,
+                }}
+            />
         </div>
     );
 }

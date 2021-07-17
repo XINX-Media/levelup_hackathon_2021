@@ -3,12 +3,11 @@ import { useState, useEffect } from "react";
 export const useSearch = () => {
 	const [search, setSearch] = useState({});
 
-	useEffect(() => {
-		let search = window.location.search;
+	const refreshSearch = () => {
+		let search = window.location.hash;
 		if (search === "") {
 			setSearch({});
 		} else {
-			// remove the "?"
 			search = search.substr(1);
 			const searchList = search.split("&");
 			const searchMap = searchList.reduce((obj, entry) => {
@@ -20,7 +19,36 @@ export const useSearch = () => {
 			}, {});
 			setSearch(searchMap);
 		}
-	}, [window.location.search]);
+	}
 
-	return search;
+	useEffect(() => {
+		refreshSearch();
+	}, [window.location.hash]);
+
+	useEffect(() => {
+		window.addEventListener('hashchange', refreshSearch);
+
+		return () => {
+			window.removeEventListener('hashchange', refreshSearch);
+		}
+	}, []);
+
+	const updateSearch = (data) => {
+		const newSearchObj = {
+			...search,
+			...data,
+		};
+		const searchList = Object.keys(newSearchObj).map((key) => {
+			const value = encodeURIComponent(newSearchObj[key]);
+			return `${key}=${value}`;
+		});
+		
+		const newSearch = searchList.join('&');
+		window.location.hash = newSearch;
+	}
+
+	return {
+		search,
+		updateSearch,
+	};
 }

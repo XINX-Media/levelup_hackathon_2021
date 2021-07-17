@@ -13,6 +13,10 @@ export default function TabWrapper({
     onLeftClicked,
     onRightClicked,
     onMiddleClicked,
+    modal,
+    leftIcon,
+    middleIcon,
+    rightIcon,
 }) {
     return (
         <div className={styles.tabWrapperOuter}>
@@ -21,25 +25,48 @@ export default function TabWrapper({
             </div>
             <div className={styles.tabWrapperNavOuter}>
                 <div className={styles.tabWrapperNavInner}>
-                    <IconButton
-                        icon={ButtonArrowLeft}
-                        backgroundColor="#fff"
-                        onClick={onLeftClicked}
-                    />
-                    <div style={{ marginTop: '-10px' }}>
+                    <div
+                        style={{
+                            marginTop: '-10px',
+                            visibility: onLeftClicked ? 'visible' : 'hidden',
+                        }}
+                    >
                         <IconButton
-                            icon={PlusButtonIcon}
+                            width={35}
+                            icon={leftIcon || ButtonArrowLeft}
+                            backgroundIcon={SeptagonButtonBackground}
+                            onClick={onLeftClicked}
+                        />
+                    </div>
+                    <div
+                        style={{
+                            marginTop: '-10px',
+                            visibility: onMiddleClicked ? 'visible' : 'hidden',
+                        }}
+                    >
+                        <IconButton
+                            width={35}
+                            icon={middleIcon || PlusButtonIcon}
                             backgroundIcon={SeptagonButtonBackground}
                             onClick={onMiddleClicked}
                         />
                     </div>
-                    <IconButton
-                        icon={ButtonArrowRight}
-                        backgroundColor="#fff"
-                        onClick={onRightClicked}
-                    />
+                    <div
+                        style={{
+                            marginTop: '-10px',
+                            visibility: onRightClicked ? 'visible' : 'hidden',
+                        }}
+                    >
+                        <IconButton
+                            width={35}
+                            icon={rightIcon || ButtonArrowRight}
+                            backgroundIcon={SeptagonButtonBackground}
+                            onClick={onRightClicked}
+                        />
+                    </div>
                 </div>
             </div>
+            {modal}
         </div>
     )
 }

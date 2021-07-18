@@ -56,3 +56,5 @@ Once you've created these tables, make a new file, `db.json` in the `/server` fo
 ```
 
 Once you've done that, simply run `npm install` which should run the build command, then `npm start`, which by default opens a server on port 8080.
+
+In order to run the app, go to `http://localhost:8080/#id=<any alphanumeric value>`

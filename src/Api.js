@@ -1,5 +1,5 @@
 function getBaseUrl() {
-    return 'http://localhost:8080';
+    return window.location.origin;
 }
 
 export async function callApi(method, api, params = {}) {
@@ -24,17 +24,21 @@ export async function callApi(method, api, params = {}) {
         options.body = JSON.stringify(params);
     }
 
-    const response = await fetch(url,options);
+    try {
+        const response = await fetch(url,options);
 
-    if (response.status !== 200) {
-        throw new Error('Looks like there was a problem. Status Code: ' + response.status);
+        if (response.status !== 200) {
+            throw new Error('Looks like there was a problem. Status Code: ' + response.status);
+        }
+
+        const json = await response.json();
+
+        if (json.success) {
+            return json;
+        }
+
+        throw Error(json.message);
+    } catch (error) {
+        console.error(`Error when fetching ${url}`, error);
     }
-
-    const json = await response.json();
-
-    if (json.success) {
-        return json;
-    }
-
-    throw Error(json.message);
 }

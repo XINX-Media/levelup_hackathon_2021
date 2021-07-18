@@ -17,11 +17,11 @@ CREATE TABLE `user` (
    `extra_hearts` int(11) DEFAULT '0',
    `ok_to_pair` tinyint(4) DEFAULT '0',
    `paired_user_id` int(11) DEFAULT NULL,
+   `hasOnboardedReframe` tinyint(4) DEFAULT '0',
+   `hasOnboardedMap` tinyint(4) DEFAULT '0',
    PRIMARY KEY (`id`)
  ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-```
 
-```
 CREATE TABLE `user_card` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `user_id` int(11) NOT NULL,
@@ -30,9 +30,7 @@ CREATE TABLE `user_card` (
    PRIMARY KEY (`id`),
    KEY `user_index` (`user_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
-```
 
-```
 CREATE TABLE `user_standard_card` (
    `id` int(11) NOT NULL AUTO_INCREMENT,
    `user_id` int(11) NOT NULL,

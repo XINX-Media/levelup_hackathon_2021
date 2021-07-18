@@ -22,6 +22,8 @@ export default function BlobImage({
     onboarding,
     plus,
     tiny,
+    gear,
+    huge,
 }) {
     const { user } = useContext(UserContext);
     let image;
@@ -39,6 +41,8 @@ export default function BlobImage({
             image = blobData.afterEatImage;
         } else if (onboarding) {
             image = blobData.onboardingImage;
+        } else if (gear) {
+            image = blobData.gear;
         }
     }
 
@@ -60,12 +64,17 @@ export default function BlobImage({
     if (tiny) {
         backgroundImage = BlobBackgroundTinyWhite;
     }
+    if (huge) {
+        backgroundImage = null;
+    }
     return (
         <div className={classnames(
             styles.blobMainImage,
             large && styles.large,
             small && styles.small,
             tiny && styles.tiny,
+            huge && styles.huge,
+            onboarding && styles.onboarding,
         )}>
             <img src={backgroundImage} />
             <img

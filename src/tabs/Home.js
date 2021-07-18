@@ -1,11 +1,11 @@
 import React from 'react';
 
-import YooButtonIcon from '../../assets/yoo_button_icon.svg';
 import WooButtonIcon from '../../assets/woo_button_icon.svg';
 import DoodButtonIcon from '../../assets/dood_button_icon.svg';
 import FoodButtonIcon from '../../assets/food_button_icon.svg';
+import SoothButtonIcon from '../../assets/sooth_button_icon.png';
+import HelpIcon from '../../assets/help_icon.png';
 
-import blobs from '../config/blobs';
 import BlobImage from '../BlobImage';
 import IconButton from'../IconButton';
 import SpreadHearts from '../components/SpreadHearts';
@@ -34,13 +34,15 @@ export default function Home({ user, setTab }) {
             <div className={styles.homeYooHolder}>
                 <div className={styles.homeButtonContainer}>
                     <IconButton
-                        icon={YooButtonIcon} 
+                        icon={FoodButtonIcon} 
                         onClick={() => {
-                            setTab('profile');
+                            setTab('food');
                         }}
+                        large
+                        backgroundColor="#5d6fcb"
                     />
                     <div className={mainStyles.instructions} style={{marginTop: '5px'}}>
-                        Yoo
+                        Care Cards
                     </div>
                 </div>
             </div>
@@ -55,7 +57,7 @@ export default function Home({ user, setTab }) {
                         }}
                     />
                     <div className={mainStyles.instructions} style={{marginTop: '5px'}}>
-                        Woo
+                        Discover
                     </div>
                 </div>
                 <div className={styles.homeButtonContainer} style={{marginTop: '45px'}}>
@@ -66,6 +68,7 @@ export default function Home({ user, setTab }) {
                         onClick={() => {
                             setTab('zoodies');
                         }}
+                        left={8}
                     />
                     <div className={mainStyles.instructions} style={{marginTop: '5px'}}>
                         Zoodies
@@ -73,46 +76,26 @@ export default function Home({ user, setTab }) {
                 </div>
                 <div className={styles.homeButtonContainer}>
                     <IconButton
-                        icon={FoodButtonIcon}
+                        icon={SoothButtonIcon}
                         backgroundColor="#f09f9c"
                         large
                         onClick={() => {
-                            setTab('food');
+                            setTab('sooth');
                         }}
                     />
                     <div className={mainStyles.instructions} style={{marginTop: '5px'}}>
-                        Food
+                        Play
                     </div>
                 </div>
             </div>
-            {/*
-            <div>Your blob is {blobs[user.blobColor].name} and it is named {user.blobName}<br/></div>
-            <div>
-                you don’t have to focus on the details of  what you did yesterday, you can just do better today
+            <div style={{ marginTop: '28px', marginBottom: "16px", width: '100%', paddingLeft: '27px' }}>
+                <IconButton
+                    icon={HelpIcon}
+                    onClick={() => {
+                        setTab('onboarding_help');
+                    }}
+                />
             </div>
-            <button
-                onClick={() => {
-                    setTab('food');
-                }}
-            >
-                Food
-            </button>
-            
-            <button
-                onClick={() => {
-                    setTab('wood');
-                }}
-            >
-                Wood
-            </button>
-            
-            <button
-                onClick={() => {
-                    setTab('mood');
-                }}
-            >
-                Mood
-            </button>*/}
         </div>
     )
 }

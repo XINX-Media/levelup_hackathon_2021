@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { callApi } from '../Api';
 import classnames from 'classnames';
 
-import BlobImage from '../BlobImage';
 import TabWrapperStandard from '../components/TabWrapperStandard';
 import TextPill from '../components/TextPill';
 
 import styles from './styles.css';
 import mainStyles from '../styles.css';
-import OnboardingButton from '../OnboardingButton';
+import UserContext from '../contexts/UserContext';
+import ReframeOnboardingOne from './ReframeOnboardingOne';
+import ReframeOnboardingTwo from './ReframeOnboardingTwo';
+import ButtonTwo from '../components/ButtonTwo';
+import ClearIcon from '../../assets/clear_icon.svg';
+import WhiteArrow from '../../assets/onboarding_button_arrow.svg';
+import Modal from '../Modal';
+import ReframeWinModal from '../modals/ReframeWinModal';
 
 const phrases = [
     'I can not do things.',
@@ -31,44 +38,60 @@ const words = [
 
 export default function ReframeGame({ setTab }) {
     const [tempPhraseIndex, setTempPhraseIndex] = useState(null);
-    const [currentPhraseIndex, setCurrentPhraseIndex] = useState(null);
+    const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
     const [gameText, setGameText] = useState('');
+    const { user, setUser } = useContext(UserContext);
+    const [onboardingStep, setOnboardingStep] = useState(1);
+    const [showWin, setShowWin] = useState(true);
+
+    if (!user.hasOnboardedReframe) {
+        if (onboardingStep === 0) {
+            return (
+                <ReframeOnboardingOne
+                    onForward={() => {
+                        setOnboardingStep(1);
+                    }}
+                />
+            );
+        } else if (onboardingStep === 1) {
+            return (
+                <ReframeOnboardingTwo
+                    onForward={async () => {
+                        const result = await callApi('PATCH', 'user', {
+                            identifier: user.identifier,
+                            changes: {
+                                hasOnboardedReframe: true,
+                            },
+                        });
+                        setUser(result.user);
+                    }}
+                />
+            );
+        }
+    }
 
     const activePhrase = phrases[currentPhraseIndex];
 
     return (
         <TabWrapperStandard
             setTab={setTab}
+            modal={showWin && (
+                <Modal>
+                    <ReframeWinModal
+                        onClose={() => {
+                            setShowWin(false);
+                            setTempPhraseIndex(currentPhraseIndex + 1);
+                            setCurrentPhraseIndex(null);
+                        }}
+                    />
+                </Modal>
+            )}
         >
             <div className={styles.reframeOuter}>
                 {!activePhrase && (
                     <>
-                        <div style={{ width: '300px', display: 'flex', justifyContent: "space-between", marginTop: '17px' }}>
-                            <TextPill text="rephrase" color="#f09f9c" />
-                            <TextPill text="your" color="#ffb800" />
-                            <TextPill text="thoughts" color="#5dcbbb" />
-                        </div>
-                        <div className={styles.reframeMidContent} style={{ marginTop: '29px' }}>
-                            <BlobImage tiny />
-                            <div className={mainStyles.instruction} style={{ marginLeft: '20px' }}>
-                                It’s okay if you’re having a hard time taking care of your zood. Let’s get started.
-                            </div>
-                        </div>
-                        <div
-                            style={{
-                                backgroundColor: '#e5e8f5',
-                                width: '100%',
-                                display: 'flex',
-                                justifyContent: "center",
-                                textAlign: 'center',
-                                height: "80px",
-                                alignItems: 'center',
-                                marginBottom: '40px',
-                            }}
-                        >
-                            <div className={mainStyles.subheading} style={{ width: '300px' }}>
-                                What are you feeling or thinking today?
-                            </div>
+                        <div className={mainStyles.subheading} style={{ marginTop: '49px', marginBottom: '40px', width: '290px' }}>
+                            What are you thinking today?
                         </div>
                         {phrases.map((phrase, index) => {
                             return (
@@ -79,26 +102,16 @@ export default function ReframeGame({ setTab }) {
                                         tempPhraseIndex === index && styles.selected,
                                     )}
                                     onClick={() => {
-                                        setTempPhraseIndex(index);
+                                        setCurrentPhraseIndex(index);
+                                        setGameText('');
                                     }}
                                 >
-                                    <div className={mainStyles.subheading}>
+                                    <div className={mainStyles.subheading} style={{ color: "#707085" }}>
                                         {phrase}
                                     </div>
                                 </div>
                             );
                         })}
-                        <div style={{ marginTop: '30px', width: '274px' }}>
-                            <OnboardingButton
-                                text="Get started!"
-                                onClick={() => {
-                                    if (tempPhraseIndex !== null) {
-                                        setCurrentPhraseIndex(tempPhraseIndex);
-                                        setGameText('');
-                                    }
-                                }}
-                            />
-                        </div>
                     </>
                 )}
                 {activePhrase && (
@@ -123,18 +136,19 @@ export default function ReframeGame({ setTab }) {
                             })}
                         </div>
                         <div style={{ width: '283px', display: 'flex', justifyContent: 'space-between', marginTop: '41px' }}>
-                            <OnboardingButton
+                            <ButtonTwo
                                 text="Clear"
                                 onClick={() => {
                                     setGameText('');
                                 }}
+                                frontIcon={ClearIcon}
                             />
-                            <OnboardingButton
+                            <ButtonTwo
                                 text="Next"
                                 onClick={() => {
-                                    setTempPhraseIndex(currentPhraseIndex + 1);
-                                    setCurrentPhraseIndex(null);
+                                    setShowWin(true);
                                 }}
+                                backIcon={WhiteArrow}
                             />
                         </div>
                     </>

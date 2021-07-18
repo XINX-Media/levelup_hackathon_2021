@@ -4,16 +4,14 @@ import { callApi } from './Api';
 import CardSwiper from './CardSwiper';
 import BlobImage from './BlobImage';
 
-import ArrowRight from '../assets/button_arrow_right.svg';
-import ArrowLeft from '../assets/button_arrow_left.svg';
-import PlusButtonIcon from '../assets/plus_button_icon.svg';
-import SeptagonButtonBackground from '../assets/septagon_button_background.svg';
 import Modal from './Modal';
 import AddCardModal from './modals/AddCardModal';
+import HeartOne from '../assets/heart_one.png';
 
 import { cards } from './config/cards';
 
 import styles from './styles.css';
+import Button from './components/Button';
 
 export default function OnboardingBlobFood({ user, setUser, goBack }) {
     const [showModal, setShowModal] = useState(false);
@@ -24,19 +22,18 @@ export default function OnboardingBlobFood({ user, setUser, goBack }) {
                 <div className={styles.onboardingBlobFoodContent}>
                     <div
                         style={{
-                            position: 'absolute',
-                            top: '-80px',
-                        }}
-                    >
-                        <BlobImage />
-                    </div>
-                    <div
-                        style={{
-                            marginTop: '98px',
+                            marginTop: '25px',
                         }}
                         className={styles.normalText}
                     >
-                        Feeding your zood
+                        Care Cards feed your Zood!
+                    </div>
+                    <div
+                        style={{
+                            marginTop: '40px'
+                        }}
+                    >
+                        <BlobImage />
                     </div>
                     <div className={styles.onboardingBlobFoodCardOuter}>
                         <div
@@ -56,8 +53,9 @@ export default function OnboardingBlobFood({ user, setUser, goBack }) {
                                     <div className={styles.instructions} style={{ fontSize: '16px', lineHeight: '19px' }}>
                                         We’ll show you tasks. Swipe right if they’re easy. Swipe left if they’re hard. Delete them if you don’t need the task.
                                     </div>
-                                    <div className={styles.instructions} style={{ marginTop: '21px', fontSize: '16px', lineHeight: '19px' }}>
-                                    These turn into food for your zood!
+                                    <div className={styles.instructions} style={{ marginTop: '21px', fontSize: '16px', lineHeight: '19px', position: 'relative' }}>
+                                        +1&nbsp;&nbsp;&nbsp;&nbsp; for each task done!
+                                        <img src={HeartOne} style={{ position: 'absolute', top: '3px', left: "14px", width: '20px' }} />
                                     </div>
                                 </>
                             )}
@@ -69,16 +67,6 @@ export default function OnboardingBlobFood({ user, setUser, goBack }) {
                                     easy,
                                     deleted: false
                                 });
-                            }}
-                            onOutOfCards={async () => {
-                                const result = await callApi('PATCH', 'user', {
-                                    identifier: user.identifier,
-                                    changes: {
-                                        hasOnboarded: true,
-                                        extra_hearts: 1,
-                                    }
-                                });
-                                setUser(result.user);
                             }}
                             onDelete={(index) => {
                                 callApi('POST', 'user/standard_card', {
@@ -98,59 +86,22 @@ export default function OnboardingBlobFood({ user, setUser, goBack }) {
                             Easy
                         </div>
                     </div>
-                    {/*<div className={styles.onboardingBlobFoodBottom}>
-                        <div className={styles.onboardingBlobFoodBottomInner}>
-                            <div
-                                className={styles.onboardingBlobFoodButton}
-                                onClick={goBack}
-                            >
-                                <img src={ArrowLeft} />
-                            </div>
-                            <div
-                                className={styles.onboardingBlobFoodButton}
-                                style={{
-                                    width: '60px',
-                                    height: '60px',
-                                    position: 'relative',
-                                    top: '-9px',
-                                    background: 'unset',
-                                }}
-                                onClick={() => {
-                                    setShowModal(true);
-                                }}
-                            >
-                                <img src={SeptagonButtonBackground} />
-                                <img
-                                    src={PlusButtonIcon}
-                                    style={{
-                                        position: 'absolute',
-                                    }}
-                                />
-                            </div>
-                            <div className={styles.onboardingBlobFoodButton}>
-                                <img src={ArrowRight} />
-                            </div>
-                        </div>
-                        <div
-                            className={styles.instructions}
-                            style={{
-                                color: '#fff',
-                                marginTop: '-32px',
-                            }}
-                        >
-                            Add card
-                        </div>
-                    </div>*/}
-                </div>
-                {showModal && (
-                    <Modal>
-                        <AddCardModal
-                            close={() => {
-                                setShowModal(false);
+                    <div style={{ marginTop: '60px', marginBottom: '68px' }}>
+                        <Button
+                            text="Care Cards selected!"
+                            onClick={async () => {
+                                const result = await callApi('PATCH', 'user', {
+                                    identifier: user.identifier,
+                                    changes: {
+                                        hasOnboarded: true,
+                                        extra_hearts: 1,
+                                    }
+                                });
+                                setUser(result.user);
                             }}
                         />
-                    </Modal>
-                )}
+                    </div>
+                </div>
             </div>
         </div>
     );

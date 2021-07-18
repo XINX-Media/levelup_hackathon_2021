@@ -4,7 +4,7 @@
     height: 50px;
 }
 
-.heartHeart, .spreadHeartHeart {
+.heartHeart, .spreadHeartHeart, .stack2HeartHeart {
     position: absolute;
 }
 
@@ -131,5 +131,69 @@
     display: flex;
     align-items: center;
     position: relative;
+}
+
+.cardPlankCardTrash {
     cursor: pointer;
+    padding-left: 6px;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+}
+
+.stack2HeartOuter {
+    position: relative;
+    width: 28px;
+    height: 29px;
+}
+
+.stack2HeartHeart:nth-of-type(1) {
+    z-index: 6;
+    top: 18.63px;
+    left: 9.5px;
+}
+
+.stack2HeartHeart:nth-of-type(2) {
+    z-index: 5;
+    left: 9px;
+    top: 11.71px;
+}
+
+.stack2HeartHeart:nth-of-type(3) {
+    z-index: 4;
+    left: 5.5px;
+    top: 8.78px;
+}
+
+.stack2HeartHeart:nth-of-type(4) {
+    z-index: 3;
+    left: 4px;
+    top: 5.85px;
+}
+
+.stack2HeartHeart:nth-of-type(5) {
+    z-index: 2;
+    left: 1.5px;
+    top: 2.93px;
+}
+
+.stack2HeartHeart:nth-of-type(6) {
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+.buttonTwoOuter {
+    background-color: #a9b0d6;
+    height: 48px;
+    border-radius: 10px;
+}
+
+.buttonTwoInner {
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    align-items: center;
+    height: 100%;
+    padding: 0 15px;
 }

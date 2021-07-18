@@ -16,13 +16,16 @@ import ZoodPinkBeginEat from '../../assets/zoods/zood_pink_begin_eat.png';
 import ZoodPinkEat from '../../assets/zoods/zood_pink_eat.png';
 import ZoodPinkAfterEat from '../../assets/zoods/zood_pink_after_eat.png';
 import ZoodPinkOnboardingSwatchSelected from '../../assets/zoods/zood_pink_onboarding_swatch_selected.png';
+import ZoodPinkGear from '../../assets/zoods/zood_pink_gear.png';
 
 import ZoodYellowOnboardingSwatchSelected from '../../assets/zoods/zood_yellow_onboarding_swatch_selected.png';
+import ZoodYellowGear from '../../assets/zoods/zood_yellow_gear.png';
 
 import ZoodBlueBeginEat from '../../assets/zoods/zood_blue_begin_eat.png';
 import ZoodBlueEat from '../../assets/zoods/zood_blue_eat.png';
 import ZoodBlueAfterEat from '../../assets/zoods/zood_blue_after_eat.png';
 import ZoodBlueOnboardingSwatchSelected from '../../assets/zoods/zood_blue_onboarding_swatch_selected.png';
+import ZoodBlueGear from '../../assets/zoods/zood_blue_gear.png';
 
 export default {
     // this one is blue
@@ -36,6 +39,7 @@ export default {
         eatImage: ZoodBlueEat,
         afterEatImage: ZoodBlueAfterEat,
         onboardingSwatchSelected: ZoodBlueOnboardingSwatchSelected,
+        gear: ZoodBlueGear,
     },
     // this one is yellow
     blobana: {
@@ -48,6 +52,7 @@ export default {
         onboardingImage: ZoodYellowOnboarding,
         happyImage: ZoodYellowHappy,
         onboardingSwatchSelected: ZoodYellowOnboardingSwatchSelected,
+        gear: ZoodYellowGear,
     },
     // this is the pink one
     blobbite: {
@@ -60,5 +65,6 @@ export default {
         eatImage: ZoodPinkEat,
         afterEatImage: ZoodPinkAfterEat,
         onboardingSwatchSelected: ZoodPinkOnboardingSwatchSelected,
+        gear: ZoodPinkGear,
     },
 };

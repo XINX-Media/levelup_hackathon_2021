@@ -5,15 +5,18 @@ import styles from './styles.css';
 import mainStyles from '../styles.css';
 
 import TabWrapper from '../components/TabWrapper';
-import ZoodyTopIcon from '../../assets/zoody_top_icon.png';
 import BlobImage from '../BlobImage';
 import ZoodiesStarBackground from '../../assets/zoodies_star_background.svg';
-import OnboardingButton from '../OnboardingButton';
+import Button from '../components/Button';
 import UserContext from '../contexts/UserContext';
 import FoodButtonIcon from '../../assets/food_button_icon.svg';
 import WooButtonIcon from '../../assets/woo_button_icon.svg';
 import ZoodNeutralSmile from '../../assets/zoods/zood_neutral_smile.png';
 import ZoodiesFoodies from './ZoodiesFoodies';
+import ZoodiesThreeZoods from '../../assets/zoodies_three_zoods.png';
+import HeartOne from '../../assets/heart_one.png';
+import StarImage from '../../assets/star_image.svg';
+import CoinImage from '../../assets/coin_image.png';
 
 export default function Zoodies({ setTab }) {
     const { user, setUser } = useContext(UserContext);
@@ -49,47 +52,89 @@ export default function Zoodies({ setTab }) {
             middleIcon={ZoodNeutralSmile}
             rightIcon={FoodButtonIcon}
         >
-            <div className={styles.zoodiesTopOuter}>
-                <img src={ZoodyTopIcon} />
-                <div style={{ marginLeft: '9px' }}>
-                    <div className={mainStyles.normalText} style={{ marginBottom: '7px' }}>
-                        Stay accountable by caring for another zood!
-                    </div>
-                    <div className={mainStyles.instructions}>
-                        Each star you give another zood is worth one heart for them and one for you.
-                    </div>
-                </div>
-            </div>
             <div className={styles.zoodiesContent}>
                 <div className={styles.zoodiesStarHolder}>
                     <div style={{ position: 'absolute' }}>
                         <img src={ZoodiesStarBackground} />
                     </div>
-                    <BlobImage plus />
+                    <div className={mainStyles.title} style={{ marginTop: '84px', fontSize: '64px' }}>
+                        Zoodies
+                    </div>
+                    <div className={mainStyles.normalText} style={{ marginTop: "14px", marginLeft: "48px" }}>
+                        Friends for your zood!
+                    </div>
+                </div>
+                <div>
+                    <img src={ZoodiesThreeZoods} />
                 </div>
                 {!user.ok_to_pair && (
                     <>
-                        <div className={mainStyles.subheading}>
+                        <div className={mainStyles.subheading} style={{ marginTop: '60px' }}>
                             Zood + Buddy = Zoody
                         </div>
                         <div
-                            className={mainStyles.instructions}
                             style={{
-                                marginTop: '10px',
-                                width: '300px',
-                                textAlign: 'center',
-                                marginBottom: '30px',
+                                display: 'flex',
+                                width: '270px',
+                                justifyContent: 'space-between',
+                                marginTop: '55px',
                             }}
                         >
-                            Stay accountable and partner up with another zood. Every action you take increases their heart count and yours!
+                            <div>
+                                <BlobImage onboarding blobId='' small />
+                                <div
+                                    className={mainStyles.normalText}
+                                    style={{
+                                        color: "#787878",
+                                        width: '99px',
+                                        position: 'relative',
+                                        marginTop: '30px',
+                                        marginLeft: '14px',
+                                    }}
+                                >
+                                    +1&nbsp;&nbsp;&nbsp; for the other Zood
+                                    <img src={HeartOne} style={{ position: 'absolute', top: '3px', left: "14px", width: '20px' }} />
+                                </div>
+                            </div>
+                            <div>
+                                <BlobImage small />
+                                <div
+                                    className={mainStyles.normalText}
+                                    style={{
+                                        color: "#787878",
+                                        width: '99px',
+                                        position: 'relative',
+                                        marginTop: '30px',
+                                        marginLeft: '14px',
+                                    }}
+                                >
+                                    +1&nbsp;&nbsp;&nbsp; for the other Zood
+                                    <img src={StarImage} style={{ position: 'absolute', top: '3px', left: "14px", width: '20px' }} />
+                                </div>
+                            </div>
                         </div>
-                        <div style={{ width: '300px', marginBottom: '50px' }}>
-                            <OnboardingButton
-                                text="I want to add a friend!"
+                        <div
+                            className={mainStyles.subheading}
+                            style={{
+                                marginTop: '60px',
+                                position: 'relative',
+                                marginBottom: '20px',
+                            }}
+                        >
+                            10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 1&nbsp;&nbsp;&nbsp;&nbsp;
+                            <img src={StarImage} style={{ position: 'absolute', top: '3px', left: "27px", width: '25px' }} />
+                            <img src={CoinImage} style={{ position: 'absolute', top: '7px', left: "90px", width: '25px' }} />
+                        </div>
+                        <div className={mainStyles.instruction} style={{ width: '207px' }}>
+                            Use your coins to purchase your prizes that you set in Discovery.
+                        </div>
+                        <div style={{ width: '240px', marginBottom: '50px', marginTop: '60px' }}>
+                            <Button
+                                text="Add a friend you know!"
                             />
                             <div style={{ marginTop: '15px' }}>
-                                <OnboardingButton
-                                    text="Pair me up with a zood!"
+                                <Button
+                                    text="Get paired with a Zood"
                                     onClick={async () => {
 
                                         const result = await callApi('POST', "user/connect", {
@@ -106,8 +151,9 @@ export default function Zoodies({ setTab }) {
                     <div
                         className={mainStyles.subheading}
                         style={{
-                            width: '300px',
+                            width: '241px',
                             textAlign: 'center',
+                            marginTop: '30px',
                         }}
                     >
                         We’ll pair you up and notify you when you have a match!

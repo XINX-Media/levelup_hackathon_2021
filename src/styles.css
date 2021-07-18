@@ -69,6 +69,11 @@
 	border-radius: 200px;
 }
 
+.blobMainImage.huge {
+	width: 263px;
+	height: 263px;
+}
+
 .blobMainImage.small {
 	width: 122px;
 	height: 122px;
@@ -77,6 +82,15 @@
 .blobMainImage.small .blobImageImage {
 	width: 75px;
 	height: 75px;
+}
+
+.blobMainImage.small.onboarding .blobImageImage {
+	height: 60px;
+}
+
+.blobMainImage.huge .blobImageImage {
+	width: 263px;
+	height: 263px;
 }
 
 .blobMainImage.tiny {
@@ -148,31 +162,21 @@
 }
 
 .onboardingButtonOuter {
-	width: 100%;
+	width: 247px;
 }
 
 .onboardingButtonInner {
-	width: calc(100% - 80px);
 	position: relative;
-	background-color: #5d6fcb;
 	cursor: pointer;
-	padding: 15px 30px;
-	border-radius: 10px;
 	color: #fff;
+	display: flex;
 }
 
 .onboardingButtonOuterRight {
-	width: 50px;
+	width: 26px;
 	height: 50px;
-	position: absolute;
 	cursor: pointer;
-	border-radius: 60px;
-	right: -20px;
-	top: -1px;
-	background-color: #a9b0d6;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	margin-left: -10px;
 }
 
 .onboardingBlobFoodOuter {
@@ -181,7 +185,6 @@
 }
 
 .onboardingBlobFoodInner {
-	padding-top: 111px;
 	position: relative;
 	display: flex;
 	flex-grow: 1;
@@ -197,7 +200,7 @@
 }
 
 .onboardingBlobFoodCardOuter {
-	margin-top: 19px;
+	margin-top: 35px;
 	width: 100%;
 	display: flex;
 	align-items: center;
@@ -354,7 +357,7 @@
 	background: rgba(0,0,0,0.25);
 	top: 0;
 	left: 0;
-	z-index: 5;
+	z-index: 7;
 	display: flex;
 	justify-content: center;
 }
@@ -363,4 +366,11 @@
 	border: none;
 	width: 100%;
 	height: 100%;
+}
+
+.centeredContent {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	align-items: center;
 }

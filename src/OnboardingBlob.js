@@ -4,7 +4,7 @@ import { callApi } from './Api';
 
 import blobs from './config/blobs';
 
-import OnboardingButton from './OnboardingButton';
+import Button from './components/Button';
 import BlobImage from './BlobImage';
 
 import styles from './styles.css';
@@ -17,14 +17,14 @@ export default function OnboardingBlob({ user, setUser, onForward }) {
             <div
                 className={styles.heading}
                 style={{
-                    marginTop: '30px',
+                    marginTop: '40px',
                 }}
             >
                 Meet your zood!
             </div>
             <div
                 style={{
-                    marginTop: '34px',
+                    marginTop: '60px',
                     width: '300px'
                 }}
             >
@@ -48,7 +48,7 @@ export default function OnboardingBlob({ user, setUser, onForward }) {
             </div>
             <div
                 style={{
-                    marginTop: '15px',
+                    marginTop: '44px',
                 }}
                 className={styles.onboardingBlobImageHolder}
             >
@@ -80,32 +80,12 @@ export default function OnboardingBlob({ user, setUser, onForward }) {
             </div>
             <div
                 style={{
-                    marginTop: '20px',
-                    width: '300px',
-                    textAlign: 'center',
-                }}
-                className={styles.instructions}
-            >
-                You’ll be responsible for taking care of this little zood here.
-            </div>
-            <div
-                style={{
-                    marginTop: '17px',
-                    textAlign: 'center',
-                }}
-                className={styles.instructions}
-            >
-                Pick a color and name for your buddy!
-            </div>
-            <div
-                style={{
-                    marginTop: '24px',
-                    width: '100%',
+                    marginTop: '60px',
                     marginBottom: '45px'
                 }}
             >
-                <OnboardingButton
-                    text="Get food for your zood"
+                <Button
+                    text="Pick your Care Cards"
                     onClick={async () => {
                         if (blob === '' || blobName === '') {
                             return;

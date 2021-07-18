@@ -12,27 +12,27 @@ import mainStyles from '../styles.css';
 
 import HeartsContext from '../contexts/HeartsContext';
 
-export default function SpreadHearts({ onboarding }) {
+export default function StackedHearts({ swipes }) {
     const { hearts } = useContext(HeartsContext);
 
-    const useHearts = onboarding ? 1830 : hearts;
+    const useHearts = swipes == null ? hearts : swipes;
 
     return (
-        <div className={styles.spreadHeartOuter}>     
-            {useHearts !== null && (
+        <div className={styles.stack2HeartOuter}>     
+            {hearts !== null && (
                 <>
-                    <img className={styles.spreadHeartHeart} src={HeartOne} />
-                    {useHearts > 5 && <img className={styles.spreadHeartHeart} src={HeartTwo} />}
-                    {useHearts > 25 && <img className={styles.spreadHeartHeart} src={HeartThree} />}
-                    {useHearts > 100 && <img className={styles.spreadHeartHeart} src={HeartFour} />}
-                    {useHearts > 250 && <img className={styles.spreadHeartHeart} src={HeartFive} />}
-                    {useHearts > 500 && <img className={styles.spreadHeartHeart} src={HeartSix} />}
+                    <img className={styles.stack2HeartHeart} src={HeartOne} />
+                    {useHearts > 5 && <img className={styles.stack2HeartHeart} src={HeartTwo} />}
+                    {useHearts > 25 && <img className={styles.stack2HeartHeart} src={HeartThree} />}
+                    {useHearts > 100 && <img className={styles.stack2HeartHeart} src={HeartFour} />}
+                    {useHearts > 250 && <img className={styles.stack2HeartHeart} src={HeartFive} />}
+                    {useHearts > 500 && <img className={styles.stack2HeartHeart} src={HeartSix} />}
                     <div
                         className={mainStyles.constraints}
                         style={{
                             position: 'absolute',
-                            top: '71px',
-                            left: '60px',
+                            top: '31px',
+                            left: '30px',
                         }}
                     >
                         {useHearts}

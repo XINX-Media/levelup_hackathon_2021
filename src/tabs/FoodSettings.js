@@ -2,13 +2,15 @@ import React, { useState, useContext, useEffect } from 'react';
 import { callApi } from '../Api';
 
 import UserContext from '../contexts/UserContext';
-import TrashIcon from '../../assets/trash_icon.svg';
 import BlackHeartRob from '../../assets/black_heart_rob.png';
 import TabWrapperStandard from '../components/TabWrapperStandard';
 import ZoodNeutralGearIcon from '../../assets/zoods/zood_neutral_gear_icon.png';
+import StackedHeartsTwo from '../components/StackedHeartsTwo';
+import CardPlank from '../components/CardPlank';
 
 import styles from './styles.css';
 import mainStyles from '../styles.css';
+import BlobImage from '../BlobImage';
 
 export default function FoodSettings({ setTab }) {
     const [cards, setCards] = useState([]);
@@ -31,18 +33,31 @@ export default function FoodSettings({ setTab }) {
             showAddCard
             onRefreshCards={refreshCards}
         >
-            <div>
-                <div className={styles.foodSettingsTopContainer}>
+            <div className={mainStyles.centeredContent}>
+                <div className={styles.foodSettingsTopContainer} style={{ marginTop: "18px", marginBottom: '10px'}}>
                     <div>
-                        <img src={ZoodNeutralGearIcon} />
+                        <BlobImage gear tiny />
                     </div>
-                    <div className={mainStyles.normalText} style={{ marginLeft: '20px' }}>
-                        You can view and edit your cards here.
+                    <div className={mainStyles.heading} style={{ marginLeft: '20px' }}>
+                        Edit Care Cards
                     </div>
                 </div>
-                <div className={styles.foodSettingsCardHolder}>
-                    {cards.map((card) => {
+                <div style={{ marginTop: '10px', marginBottom: '60px' }}>
+                    {cards.map((card, index) => {
                         return (
+                            <div
+                                style={{ marginTop: index === 0 ? 0 : 20, width: '330px' }}
+                                key={`card_${index}`}
+                            >
+                                <CardPlank
+                                    swipes={card.swipes}
+                                    text={card.card_text}
+                                    cardId={card.id}
+                                    onDelete={refreshCards}
+                                />
+                            </div>
+                        );
+                        /*
                             <div
                                 className={styles.foodSettingsCardOuter}
                                 key={card.id}
@@ -62,36 +77,11 @@ export default function FoodSettings({ setTab }) {
                                             position: 'relative',
                                         }}
                                     >
-                                        <img src={BlackHeartRob} />
-                                        <div
-                                            className={mainStyles.constraints}
-                                            style={{
-                                                position: 'absolute',
-                                                right: '-2px',
-                                                top: '17px',
-                                            }}
-                                        >
-                                            {card.swipes}
-                                        </div>
-                                    </div>
-                                    <div
-                                        className={styles.foodSettingsCardTrash}
-                                        onClick={async () => {
-                                            await callApi("DELETE", "user/cards", {
-                                                user_id: user.id,
-                                                card_id: card.id,
-                                            });
-                                            const result = await callApi("GET", "user/cards", {
-                                                user_id: user.id,
-                                            });
-                                            setCards(result.cards);
-                                        }}
-                                    >
-                                        <img src={TrashIcon} />
+                                        <StackedHeartsTwo />
                                     </div>
                                 </div>
                             </div>
-                        );
+                        */
                     })}
                 </div>
             </div>

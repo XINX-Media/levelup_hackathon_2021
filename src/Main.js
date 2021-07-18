@@ -11,6 +11,7 @@ import { useSearch } from './utils';
 import Sooth from './tabs/Sooth';
 import ReframeGame from './games/ReframeGame';
 import MapHolder from './tabs/MapHolder';
+import OnboardingStepTwo from './OnboardingStepTwo';
 
 export default function Main({ user }) {
 	const [tab, setTab] = useState('home');
@@ -77,6 +78,12 @@ export default function Main({ user }) {
     } else if (tab === "map") {
         return <MapHolder
             setTab={doSetTab}
+        />
+    } else if (tab === "onboarding_help") {
+        return <OnboardingStepTwo 
+            onForward={() => {
+                doSetTab('home');
+            }}
         />
     }
 

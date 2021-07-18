@@ -8,7 +8,7 @@ import Modal from '../Modal';
 import AddCardModal from '../modals/AddCardModal';
 import PlusButtonIcon from '../../assets/plus_button_icon.svg';
 
-export default function TabWrapperStandard({ children, setTab, showAddCard, onRefreshCards }) {
+export default function TabWrapperStandard({ children, setTab, showAddCard, onRefreshCards, modal }) {
     const [modalOpen, setModalOpen] = useState(false);
 
     return (
@@ -29,7 +29,7 @@ export default function TabWrapperStandard({ children, setTab, showAddCard, onRe
             leftIcon={WooButtonIcon}
             middleIcon={ZoodNeutralSmile}
             rightIcon={showAddCard ? PlusButtonIcon : FoodButtonIcon}
-            modal={modalOpen && (
+            modal={modal || (modalOpen && (
                 <Modal>
                     <AddCardModal
                         close={() => {
@@ -40,7 +40,7 @@ export default function TabWrapperStandard({ children, setTab, showAddCard, onRe
                         }}
                     />
                 </Modal>
-            )}
+            ))}
         >
             {children}
         </TabWrapper>

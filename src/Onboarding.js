@@ -1,31 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import OnboardingBlob from './OnboardingBlob';
 import OnboardingBlobFood from './OnboardingBlobFood';
+import OnboardingStepOne from './OnboardingStepOne';
+import OnboardingStepTwo from './OnboardingStepTwo';
 
 export default function Onboarding({ user, setUser }) {
-    const [forceStepOne, setForceStepOne] = useState(false);
+    const [step, setStep] = useState(2);
 
-    const stepOne = !user.blobColor || forceStepOne;
+    useEffect(() => {
+        if (user.blobColor) {
+            setStep(3);
+        }
+    }, [user]);
 
     return (
         <>
-            {stepOne && (
-                <OnboardingBlob
-                    user={user}
-                    setUser={setUser}
+            {step === 0 && (
+                <OnboardingStepOne
                     onForward={() => {
-                        setForceStepOne(false);
+                        setStep(1);
                     }}
                 />
             )}
-            {!stepOne && (
+            {step === 1 && (
+                <OnboardingStepTwo
+                    onForward={() => {
+                        setStep(2);
+                    }}
+                />
+            )}
+            {step === 2 && (
+                <OnboardingBlob
+                    user={user}
+                    setUser={setUser}
+                />
+            )}
+            {step === 3 && (
                 <OnboardingBlobFood
                     user={user}
                     setUser={setUser}
-                    goBack={() => {
-                        setForceStepOne(true);
-                    }}
                 />
             )}
         </>

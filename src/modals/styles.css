@@ -1,9 +1,25 @@
 .onboardingBlobFoodModalOuter {
-	width: 220px;
+	width: 250px;
 	height: 328px;
 	position: absolute;
 	bottom: 31px;
-	background-color: #e5e8f5;
+	background-color: #fff;
 	padding: 40px 36px;
 	border-radius: 9px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.reframeWinModalOuter {
+	width: 250px;
+	height: 328px;
+	position: absolute;
+	bottom: 31px;
+	background-color: #fff;
+	padding: 40px 36px;
+	border-radius: 9px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }

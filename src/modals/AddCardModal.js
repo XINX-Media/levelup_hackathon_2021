@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 import styles from './styles.css';
 import mainStyles from '../styles.css';
-import OnboardingButton from '../OnboardingButton';
+import Button from '../components/Button';
 import UserContext from '../contexts/UserContext';
 
 export default function AddCardModal({ close }) {
@@ -16,7 +16,7 @@ export default function AddCardModal({ close }) {
             <div className={mainStyles.normalText} style={{textAlign: 'center'}}>
                 Add a custom card!
             </div>
-            <div style={{ height: '220px', marginTop: '20px', marginBottom: '20px' }}>
+            <div style={{ height: '220px', marginTop: '20px', marginBottom: '20px', width: '220px' }}>
                 <div className={mainStyles.cardSwiperCardFixed}>
                     <textarea
                         className={classnames(mainStyles.textarea, mainStyles.normalText)}
@@ -24,10 +24,11 @@ export default function AddCardModal({ close }) {
                             setPopupText(e.target.value);
                         }}
                         value={popupText}
+                        placeholder="You can add 5 cards for free!"
                     ></textarea>
                 </div>
             </div>
-            <OnboardingButton
+            <Button
                 text="Add card!"
                 onClick={async () => {
                     if (popupText !== "") {

@@ -5,17 +5,16 @@ import styles from './styles.css';
 import mainStyles from '../styles.css';
 
 import TabWrapper from '../components/TabWrapper';
-import ZoodyTopIcon from '../../assets/zoody_top_icon.png';
 import BlobImage from '../BlobImage';
 import UserContext from '../contexts/UserContext';
 import StackedHearts from '../components/StackedHearts';
-import { cards as publicCards } from '../config/cards';
 import CardSwiperTop from '../CardSwiperTop';
 import HeartsContext from '../contexts/HeartsContext';
 import StarImage from '../../assets/star_image.svg';
 import FoodButtonIcon from '../../assets/food_button_icon.svg';
 import WooButtonIcon from '../../assets/woo_button_icon.svg';
 import ZoodNeutralSmile from '../../assets/zoods/zood_neutral_smile.png';
+import CardContext from '../contexts/CardContext';
 
 const starList = [
     { x: 11, y: 116 },
@@ -47,6 +46,7 @@ export default function ZoodiesFoodies({ setTab }) {
     const [swipedCardAfter, setSwipedCardAfter] = useState(false);
     const { refreshHearts } = useContext(HeartsContext);
     const [stars, setStars] = useState(0);
+    const { cards: publicCards } = useContext(CardContext);
 
     useEffect(async () => {
         const result = await callApi("GET", "user/cards", {
@@ -57,10 +57,12 @@ export default function ZoodiesFoodies({ setTab }) {
 
     const allCards = [
         ...publicCards,
-        ...cards.map((card) => {
-            return card.card_text;
-        }),
+        ...cards,
     ];
+
+    const allCardsText = allCards.map(({ card_text }) => {
+        return card_text;
+    });
 
     useEffect(async () => {
         if (user && user.paired_user_id) {
@@ -122,17 +124,6 @@ export default function ZoodiesFoodies({ setTab }) {
             middleIcon={ZoodNeutralSmile}
             rightIcon={FoodButtonIcon}
         >
-            <div className={styles.zoodiesTopOuter} style={{ padding: '0px 11px', paddingBottom: '2px' }}>
-                <img src={ZoodyTopIcon} style={{ height: '70px' }} />
-                <div style={{ marginLeft: '20px' }}>
-                    <div className={mainStyles.title} style={{ marginBottom: '10px' }}>
-                        zoodies
-                    </div>
-                    <div className={mainStyles.instructions}>
-                        Friends for your zood!
-                    </div>
-                </div>
-            </div>
             {pairedUser && (
                 <div
                     className={styles.zoodiesContent}
@@ -141,54 +132,70 @@ export default function ZoodiesFoodies({ setTab }) {
                         position: 'relative',
                     }}
                 >
-                    <BlobImage
-                        blobId={pairedUser.blobColor}
-                        name={pairedUser.blobName}
-                        beginEat={isDragging && swipedCardIndex === null}
-                        eating={swipedCardIndex !== null}
-                        afterEating={swipedCardAfter}
-                    />
+                    <div
+                        style={{
+                            position: 'absolute',
+                            top: '20px',
+                            left: '46px',
+                        }}
+                    >
+                        <BlobImage
+                            blobId={pairedUser.blobColor}
+                            name={pairedUser.blobName}
+                            beginEat={isDragging && swipedCardIndex === null}
+                            eating={swipedCardIndex !== null}
+                            afterEating={swipedCardAfter}
+                            small
+                        /> 
+                    </div>
+                    <div
+                        style={{
+                            position: 'absolute',
+                            top: '61px',
+                            right: '36px',
+                        }}
+                    >
+                        <BlobImage
+                            name={user.blobName}
+                            beginEat={isDragging && swipedCardIndex === null}
+                            eating={swipedCardIndex !== null}
+                            afterEating={swipedCardAfter}
+                        />
+                    </div>
                     <div style={{
                         position: 'absolute',
-                        top: '33px',
-                        left: '35px',
+                        top: '161px',
+                        left: '75px',
                     }}>
                         <StackedHearts />
                     </div>
                     <div
                         style={{
                             position: 'absolute',
-                            top: '0px',
-                            left: '0px',
-                            width: '100%',
-                            height: '203px',
+                            top: '18px',
+                            right: '45px',
                         }}
                     >
-                        {starList.map(({ x, y }, index) => {
-                            if (index >= stars) {
-                                return;
-                            }
-                            return (
-                                <img
-                                    key={`star_${index}`}
-                                    src={StarImage}
-                                    style={{
-                                        position: 'absolute',
-                                        left: x,
-                                        top: y,
-                                    }}
-                                />
-                            )
-                        })}
+                        <img src={StarImage} style={{ width: '48px', height: '48px' }} />
+                        <div
+                            className={mainStyles.constraints}
+                            style={{
+                                position: 'absolute',
+                                right: 0,
+                                bottom: '5px',
+                            }}
+                        >
+                            {stars}
+                        </div>
                     </div>
-                    <div style={{ marginTop: '30px', marginBottom: '40px', position: 'relative' }}>
+                    <div style={{ marginTop: '30px', marginBottom: '40px', position: 'relative', marginTop: '220px' }}>
                         {swipedCardIndex !== null && (
                             <div
                                 className={styles.foodFloatingCardHolder}
                                 style={{
                                     transform: `scale(${1 - swipedCardProgress / 15}, ${1 - swipedCardProgress / 15})`,
                                     top: -100 - (swipedCardProgress*6),
-                                    left: 50,
+                                    left: 50 + (swipedCardProgress*6),
                                 }}
                             >
                                 <div
@@ -199,21 +206,31 @@ export default function ZoodiesFoodies({ setTab }) {
                                     }}
                                 >
                                     <div className={mainStyles.subheading}>
-                                        {allCards[swipedCardIndex]}
+                                        {allCards[swipedCardIndex].card_text}
                                     </div>
                                 </div>
                             </div>
                         )}
                         <CardSwiperTop
-                            cards={allCards}
+                            cards={allCardsText}
                             swipeCard={async (index) => {
-                                const card = cards[index];
-                                await callApi("PATCH", "card", {
-                                    id: card.id,
-                                    changes: {
-                                        swipes: card.swipes + 1,
-                                    },
-                                });
+                                const card = allCards[index];
+                                if (card.card_index === undefined) {
+                                    await callApi("PATCH", "card", {
+                                        id: card.id,
+                                        changes: {
+                                            swipes: card.swipes + 1,
+                                        },
+                                    });
+                                } else {
+                                    await callApi("PATCH", "user/standard_card", {
+                                        user_id: user.id,
+                                        card_index: card.card_index, 
+                                        changes: {
+                                            swipes: card.swipes + 1,
+                                        },
+                                    });
+                                }
                                 await callApi("PUT", "user/connect/give_heart", {
                                     id: user.id,
                                 });

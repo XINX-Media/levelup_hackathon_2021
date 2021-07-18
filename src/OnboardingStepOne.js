@@ -11,7 +11,7 @@ export default function OnboardingStepOne({ onForward }) {
             style={{ cursor: 'pointer' }}
             onClick={onForward}
         >
-            <div className={styles.title} style={{ marginTop: '60px' }}>
+            <div className={styles.title} style={{ marginTop: '60px', fontSize: '64px', lineHeight: '64px' }}>
                 Zood
             </div>
             <div className={styles.normalText} style={{ marginTop: '18px'}}>

@@ -13,13 +13,13 @@ export default function ButtonTwo({ onClick, text, frontIcon, backIcon }) {
                 onClick={onClick}
             >
                 {frontIcon && (
-                    <img src={frontIcon} style={{ marginTop: '3px' }} />
+                    <img src={frontIcon} style={{ marginTop: '-4px' }} />
                 )}
                 <div className={mainStyles.normalText}>
                     {text}
                 </div>
                 {backIcon && (
-                    <img src={backIcon} style={{ marginTop: '3px', marginLeft: '10px' }} />
+                    <img src={backIcon} style={{ marginTop: '-3px', marginLeft: '10px' }} />
                 )}
             </div>
         </div>

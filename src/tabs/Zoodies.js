@@ -93,7 +93,7 @@ export default function Zoodies({ setTab }) {
                                     }}
                                 >
                                     +1&nbsp;&nbsp;&nbsp; for the other Zood
-                                    <img src={HeartOne} style={{ position: 'absolute', top: '3px', left: "14px", width: '20px' }} />
+                                    <img src={HeartOne} style={{ position: 'absolute', top: '-2px', left: "14px", width: '20px' }} />
                                 </div>
                             </div>
                             <div>
@@ -109,7 +109,7 @@ export default function Zoodies({ setTab }) {
                                     }}
                                 >
                                     +1&nbsp;&nbsp;&nbsp; for the other Zood
-                                    <img src={StarImage} style={{ position: 'absolute', top: '3px', left: "14px", width: '20px' }} />
+                                    <img src={StarImage} style={{ position: 'absolute', top: '-4px', left: "14px", width: '20px' }} />
                                 </div>
                             </div>
                         </div>
@@ -122,8 +122,8 @@ export default function Zoodies({ setTab }) {
                             }}
                         >
                             10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 1&nbsp;&nbsp;&nbsp;&nbsp;
-                            <img src={StarImage} style={{ position: 'absolute', top: '3px', left: "27px", width: '25px' }} />
-                            <img src={CoinImage} style={{ position: 'absolute', top: '7px', left: "90px", width: '25px' }} />
+                            <img src={StarImage} style={{ position: 'absolute', top: '-3px', left: "27px", width: '25px' }} />
+                            <img src={CoinImage} style={{ position: 'absolute', top: '3px', left: "90px", width: '25px' }} />
                         </div>
                         <div className={mainStyles.instruction} style={{ width: '207px' }}>
                             Use your coins to purchase your prizes that you set in Discovery.

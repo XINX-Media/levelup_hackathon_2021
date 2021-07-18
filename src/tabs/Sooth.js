@@ -21,7 +21,7 @@ export default function Sooth({ setTab }) {
                     <BlobImage small />
                 </div>
                 <div className={mainStyles.title} style={{ marginTop: '14px' }}>
-                    Sooth
+                    Play
                 </div>
                 <div
                     className={styles.soothButton}
@@ -39,18 +39,15 @@ export default function Sooth({ setTab }) {
                     style={{ backgroundColor: "#f09f9c", marginTop: '10px' }}
                 >
                     <div className={mainStyles.subheading}>
-                        sort
+                        reduce
                     </div>
                 </div>
                 <div
                     className={styles.soothButton}
                     style={{ backgroundColor: "#f6cf69", marginTop: '10px', marginBottom: '90px' }}
-                    onClick={() => {
-                        setTab('food');
-                    }}
                 >
                     <div className={mainStyles.subheading}>
-                        food
+                        remember
                     </div>
                 </div>
             </div>

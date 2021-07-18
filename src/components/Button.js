@@ -17,7 +17,7 @@ export default function Button({ onClick, text, left }) {
                 <div>
                     <img src={ButtonBackground} />
                 </div>
-                <div style={{ position: 'absolute', top: '10px', left: left || '5px' }} className={styles.normalText}>
+                <div style={{ position: 'absolute', top: '16px', left: left || '5px' }} className={styles.normalText}>
                     {text}
                 </div>
                 <div className={styles.onboardingButtonOuterRight}>

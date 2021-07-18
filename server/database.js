@@ -1,5 +1,8 @@
 const mysql = require('mysql');
-const config = require('./db.json');
+let config = {};
+if (!process.env.production) {
+    config = require('./db.json');
+}
 
 const hostname = process.env.DB_HOST || config.host;
 const user = process.env.DB_USER || config.user;

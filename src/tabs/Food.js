@@ -44,10 +44,14 @@ export default function Food({ user, setTab }) {
                 };
             }, {});
 
-            setFilteredPublicCards(standardCards.filter((card, index) => {
+            setFilteredPublicCards(standardCards.map((card, index) => {
                 const data = dataByIndex[index];
-
-                if (data.deleted) {
+                return {
+                    card_text: card,
+                    ...data,
+                }
+            }).filter((card) => {
+                if (card.deleted) {
                     return false;
                 }
 
@@ -58,10 +62,12 @@ export default function Food({ user, setTab }) {
 
     const allCards = [
         ...filteredPublicCards,
-        ...cards.map((card) => {
-            return card.card_text;
-        }),
+        ...cards,
     ];
+
+    const allText = allCards.map(({ card_text }) => {
+        return card_text;
+    });
 
     useEffect(() => {
         if (swipedCardIndex !== null) {
@@ -149,21 +155,32 @@ export default function Food({ user, setTab }) {
                                 }}
                             >
                                 <div className={mainStyles.subheading}>
-                                    {allCards[swipedCardIndex]}
+                                    {allCards[swipedCardIndex].card_text}
                                 </div>
                             </div>
                         </div>
                     )}
                     <CardSwiperTop
-                        cards={allCards}
+                        cards={allText}
                         swipeCard={async (index) => {
-                            const card = cards[index];
-                            await callApi("PATCH", "card", {
-                                id: card.id,
-                                changes: {
-                                    swipes: card.swipes + 1,
-                                },
-                            });
+                            const card = allCards[index];
+                            console.log(card);
+                            if (card.card_index === undefined) {
+                                await callApi("PATCH", "card", {
+                                    id: card.id,
+                                    changes: {
+                                        swipes: card.swipes + 1,
+                                    },
+                                });
+                            } else {
+                                await callApi("PATCH", "user/standard_card", {
+                                    user_id: user.id,
+                                    card_index: card.card_index, 
+                                    changes: {
+                                        swipes: card.swipes + 1,
+                                    },
+                                });
+                            }
                             setSwipedCardIndex(index);
                             setSwipedCardProgress(0);
                         }}

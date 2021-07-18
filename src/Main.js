@@ -10,6 +10,7 @@ import Zoodies from './tabs/Zoodies';
 import { useSearch } from './utils';
 import Sooth from './tabs/Sooth';
 import ReframeGame from './games/ReframeGame';
+import MapHolder from './tabs/MapHolder';
 
 export default function Main({ user }) {
 	const [tab, setTab] = useState('home');
@@ -71,6 +72,10 @@ export default function Main({ user }) {
         />
     } else if (tab === "reframe_game") {
         return <ReframeGame
+            setTab={doSetTab}
+        />
+    } else if (tab === "map") {
+        return <MapHolder
             setTab={doSetTab}
         />
     }

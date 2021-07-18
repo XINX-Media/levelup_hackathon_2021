@@ -106,6 +106,11 @@ router.get('/user/hearts', async (req, res) => {
         count += card.swipes;
     }
 
+    const standardCards = await StandardCard.getCardsForUser(id);
+    for (const card of standardCards) {
+        count += card.swipes;
+    }
+
     const user = await User.getForId(id);
 
     count += user.extra_hearts;
@@ -274,6 +279,34 @@ router.get("/user/standard_card", async (req, res) => {
         res.json({
             success: true,
             cards,
+        });
+    } catch (error) {
+        console.error(error);
+        res.json({
+            success: false,
+            message: error.message,
+        });
+    }
+})
+
+router.patch("/user/standard_card", async (req, res) => {
+    const { user_id, card_index, changes } = req.body;
+
+    try {
+        const card = await StandardCard.getCardForUser(user_id, card_index);
+
+        if (!card) {
+            res.json({
+                success: false,
+                message: `No card found for ${user_id}/${card_index}`,
+            });
+            return;
+        }
+        const newCard = await StandardCard.updateCard(user_id, card_index, changes);
+
+        res.json({
+            success: true,
+            card: newCard,
         });
     } catch (error) {
         console.error(error);

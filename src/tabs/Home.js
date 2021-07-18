@@ -50,6 +50,9 @@ export default function Home({ user, setTab }) {
                         icon={WooButtonIcon}
                         backgroundColor="#5dcbbb"
                         large
+                        onClick={() => {
+                            setTab('map');
+                        }}
                     />
                     <div className={mainStyles.instructions} style={{marginTop: '5px'}}>
                         Woo

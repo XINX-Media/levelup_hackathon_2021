@@ -134,7 +134,8 @@ router.post("/user/connect", async (req, res) => {
         });
     } else {
         // let's try to find a valid user
-        const pairableUsers = (await User.getPairableUsers()).filter(({ id: otherId }) => {
+        const users = await User.getPairableUsers();
+        const pairableUsers = users.filter(({ id: otherId }) => {
             return id != otherId;
         });
 

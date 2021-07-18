@@ -6,43 +6,32 @@ import MapBackground from '../../assets/map_background.png';
 import MapOverlay from '../../assets/map_overlay.png';
 import { getRandomInt } from '../utils';
 import UserContext from '../contexts/UserContext';
-import { cards as standardCards } from '../config/cards';
+import { parentHexes } from '../config/map';
+import MapHexBlur from '../../assets/map_hex_blur.png';
+import CardContext from '../contexts/CardContext';
 
-export default function Map() {
+export default function Map({ onParentClick }) {
     const [canvasWidth, setCanvasWidth] = useState(0);
     const [canvasHeight, setCanvasHeight] = useState(0);
     const containerRef = useRef();
     const [cursorDownPos, setCursorDownPos] = useState(null);
     const [lastCursorPos, setLastCursorPos] = useState(null);
     const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-    const [filteredPublicCards, setFilteredPublicCards] = useState([]);
     const { user } = useContext(UserContext);
+    const [userTiles, setUserTiles] = useState([]);
+    const { cards: filteredPublicCards } = useContext(CardContext);
+
+    const getTiles = async () => {
+        const result = await callApi('GET', "user/map", {
+            user_id: user.id,
+        });
+
+        setUserTiles(result.items);
+    }
 
     useEffect(async () => {
         if (user && user.id) {
-            const result = await callApi("GET", "user/standard_card", { id: user.id });
-            const cardData = result.cards;
-
-            const dataByIndex = cardData.reduce((obj, data) => {
-                return {
-                    ...obj,
-                    [data.card_index]: data,
-                };
-            }, {});
-
-            setFilteredPublicCards(standardCards.map((card, index) => {
-                const data = dataByIndex[index];
-                return {
-                    card_text: card,
-                    ...data,
-                }
-            }).filter((card) => {
-                if (card.deleted) {
-                    return false;
-                }
-
-                return true;
-            }));
+            getTiles();
         }
     }, [user]);
 
@@ -63,8 +52,10 @@ export default function Map() {
     const hexRadius = 32;
 
     const hexSpaceToRealSpace = (x, y) => {
-        let rx = x * 56 + dragOffset.x-48;
-        let ry = y * 49 + dragOffset.y-10;
+        let rx = x * 56;
+        rx += dragOffset.x-48;
+        let ry = y * 49;
+        ry += dragOffset.y-10;
 
         if (y % 2 !== 0) {
             rx += 28;
@@ -95,122 +86,7 @@ export default function Map() {
         };
     }
 
-    const teal = "#5dcbbb";
-    const yellow = "#ffb800";
-    const pink = "#f09f9c";
-    const grey = "#707085";
-
-    const parentHexes = [
-        {
-            x: 7, 
-            y: 2,
-            color: teal,
-            card_index: 0,
-        },
-        {
-            x: 4, 
-            y: 3,
-            color: yellow,
-            card_index: 1,
-        },
-        {
-            x: 11, 
-            y: 3,
-            color: teal,
-            card_index: 2,
-        },
-        {
-            x: 9, 
-            y: 4,
-            color: yellow,
-            card_index: 3,
-        },
-        {
-            x: 6, 
-            y: 5,
-            color: pink,
-            card_index: 4,
-        },
-        {
-            x: 11, 
-            y: 6,
-            color: pink,
-            card_index: 5,
-        },
-        {
-            x: 8, 
-            y: 7,
-            color: teal,
-            card_index: 6,
-        },
-        {
-            x: 6, 
-            y: 8,
-            color: yellow,
-            card_index: 7,
-        },
-        {
-            x: 13, 
-            y: 8,
-            color: teal,
-            card_index: 8,
-        },
-        {
-            x: 10, 
-            y: 9,
-            color: yellow,
-            card_index: 9,
-        },
-        {
-            x: 8, 
-            y: 10,
-            color: pink,
-            card_index: 10,
-        },        {
-            x: 5, 
-            y: 11,
-            color: teal,
-            card_index: 11
-        },
-        {
-            x: 12, 
-            y: 11,
-            color: pink,
-            card_index: 12,
-        },
-        {
-            x: 3, 
-            y: 12,
-            color: yellow,
-            card_index: 13,
-        },
-        {
-            x: 10, 
-            y: 12,
-            color: teal,
-            card_index: 14,
-        },
-        {
-            x: 7, 
-            y: 13,
-            color: yellow,
-            card_index: 15,
-        },
-        {
-            x: 5, 
-            y: 14,
-            color: pink,
-            card_index: 16,
-        },
-        {
-            x: 9, 
-            y: 15,
-            color: pink,
-            card_index: 17,
-        },
-    ];
-
-    const hexes = [];
+    let hexes = [];
 
     const childPositionsOdd = [
         {x: 0, y: -1 },
@@ -230,6 +106,14 @@ export default function Map() {
         {x: -1, y: -1},
     ];
 
+    const grey = "#707085";
+
+    const userKeys = userTiles.map(({ x, y }) => {
+        return `${x}_${y}`;
+    });
+
+    const hiddenSquares = [];
+
     parentHexes.forEach((parentHex) => {
         const usePositions = parentHex.y % 2 === 0 ? childPositionsEven : childPositionsOdd;
         
@@ -244,22 +128,41 @@ export default function Map() {
         const unlocked = Math.floor(swipes/5);
 
         if (unlocked < 6) {
-            hexes.push(parentHex);
+            hexes.push({
+                ...parentHex,
+                type: "parent",
+            });
+        } else {
+            const parentKey = `${parentHex.x}_${parentHex.y}`;
+            if (!userKeys.includes(parentKey)) {
+                hiddenSquares.push({
+                    x: parentHex.x,
+                    y: parentHex.y,
+                });
+            }
         }
 
         usePositions.forEach((child, index) => {
-            if (index < unlocked) {
-                return;
-            }
-            const colors = [teal, pink, yellow];
-
             const newX = parentHex.x + child.x;
             const newY = parentHex.y + child.y;
+
+            if (index < unlocked) {
+                const newKey = `${newX}_${newY}`;
+
+                if (!userKeys.includes(newKey)) {
+                    hiddenSquares.push({
+                        x: newX,
+                        y: newY,
+                    });
+                }
+                return;
+            }
 
             hexes.push({
                 x: newX,
                 y: newY,
                 color: grey,//colors[getRandomInt(0, colors.length-1)],
+                type: 'child',
             });
         })
     });
@@ -292,10 +195,39 @@ export default function Map() {
                     }
                 }}
                 onMouseUp={({ x, y }) => {
-                    if (cursorDownPos.x === x && cursorDownPos.y === y) {
-                        // do thing
-                    }
                     setCursorDownPos(null);
+                    if (cursorDownPos.x === x && cursorDownPos.y === y) {
+                        for (const hex of hexes) {
+                            if (hex.type === "child") {
+                                continue;
+                            }
+                            const { x: rx, y: ry } = h2r(hex.x, hex.y);
+                            //console.log(x, rx, y, ry);
+                            const dist = Math.sqrt(Math.pow(x-rx, 2) + Math.pow(y-ry, 2));
+                            //console.log(dist);
+                            if (dist < hexRadius) {
+                                onParentClick(hex.card_index);
+                                return;
+                            }
+                        }
+
+                        for (const hex of hiddenSquares) {
+                            const { x: rx, y: ry } = h2r(hex.x, hex.y);
+                            //console.log(x, rx, y, ry);
+                            const dist = Math.sqrt(Math.pow(x-rx, 2) + Math.pow(y-ry, 2));
+                            //console.log(dist);
+                            if (dist < hexRadius) {
+                                callApi("POST", "user/map", {
+                                    user_id: user.id,
+                                    x: hex.x,
+                                    y: hex.y,
+                                }).then(() => {
+                                    getTiles();
+                                });
+                                return;
+                            }
+                        }
+                    }
                 }}
             >
                 <Rect
@@ -327,6 +259,19 @@ export default function Map() {
                             {...getHex(x, y)}
                             color={color}
                             fill
+                        />
+                    )
+                })}
+                {hiddenSquares.map(({ x, y }) => {
+                    const { x: hexX, y: hexY } = getHex(x, y);
+                    return (
+                        <Image
+                            key={`hidden_${x}_${y}`}
+                            src={MapHexBlur}
+                            x={hexX-27}
+                            y={hexY-34}
+                            width={56}
+                            height={64}
                         />
                     )
                 })}

@@ -9,7 +9,7 @@ export const cards = [
     'Watch the clouds float by',
     'Dance party',
     'Look at the stars',
-    'Take nedication',
+    'Take medication',
     'Arts & Crafts',
     'Go to a coffee shop',
     'Do yoga',

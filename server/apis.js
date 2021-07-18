@@ -2,6 +2,7 @@ const express = require("express");
 const User = require('./user');
 const Card = require('./card');
 const StandardCard = require('./standardCard');
+const Map = require("./map");
 
 const router = express.Router();
 
@@ -287,7 +288,7 @@ router.get("/user/standard_card", async (req, res) => {
             message: error.message,
         });
     }
-})
+});
 
 router.patch("/user/standard_card", async (req, res) => {
     const { user_id, card_index, changes } = req.body;
@@ -315,6 +316,41 @@ router.patch("/user/standard_card", async (req, res) => {
             message: error.message,
         });
     }
-})
+});
+
+router.get("/user/map", async (req, res) => {
+    const { user_id } = req.query;
+    try {
+        const items = await Map.getForUser(user_id);
+        res.json({
+            success: true,
+            items,
+        });
+    } catch (error) {
+        console.error(error);
+        res.json({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
+router.post("/user/map", async (req, res) => {
+    const { user_id, x, y } = req.body;
+    try {
+        const item = await Map.addCard(user_id, x, y);
+        res.json({
+            success: true,
+            item,
+        });
+    } catch (error) {
+        console.error(error);
+        res.json({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
 
 module.exports = router;

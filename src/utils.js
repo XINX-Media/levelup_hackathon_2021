@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 export const useSearch = () => {
 	const [search, setSearch] = useState({});
+	const [searchLoaded, setSearchLoaded] = useState(false);
 
 	const refreshSearch = () => {
 		let search = window.location.hash;
@@ -19,6 +20,7 @@ export const useSearch = () => {
 			}, {});
 			setSearch(searchMap);
 		}
+		setSearchLoaded(true);
 	}
 
 	useEffect(() => {
@@ -50,6 +52,7 @@ export const useSearch = () => {
 	return {
 		search,
 		updateSearch,
+		searchLoaded,
 	};
 }
 
@@ -57,4 +60,11 @@ export function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// derived from https://stackoverflow.com/a/10727155/8346513
+export function randomString(length, chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
 }

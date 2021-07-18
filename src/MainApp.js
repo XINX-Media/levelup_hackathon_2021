@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { useSearch } from './utils';
+import React, { useContext, useEffect } from 'react';
+import { useSearch, randomString } from './utils';
 
 import UserContext from './contexts/UserContext';
 
@@ -8,7 +8,17 @@ import Onboarding from './Onboarding';
 
 export default function MainApp() {
     const { user, setUser } = useContext(UserContext);
-    const { search } = useSearch();
+    const { search, searchLoaded, updateSearch } = useSearch();
+
+	useEffect(() => {
+		if (searchLoaded && !search.id) {
+			const newId = randomString(15);
+			updateSearch({
+				id: newId,
+			});
+		}
+	}, [search, searchLoaded]);
+
     return (
         <>
             {!search.id && (

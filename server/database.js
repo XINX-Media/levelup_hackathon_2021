@@ -1,9 +1,19 @@
 const mysql = require('mysql');
 const config = require('./db.json');
 
+const hostname = process.env.DB_HOST || config.host;
+const user = process.env.DB_USER || config.user;
+const password = process.env.DB_PASS || config.password;
+const database = process.env.DB_DATABASE || config.database;
+
 // config must have:
 // host, user, password, database
-const conn = mysql.createConnection(config);
+const conn = mysql.createConnection({
+    hostname,
+    user,
+    password,
+    database,
+});
 conn.connect();
 
 class DatabaseTable {

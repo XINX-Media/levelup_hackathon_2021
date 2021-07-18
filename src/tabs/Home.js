@@ -29,6 +29,9 @@ export default function Home({ user, setTab }) {
                 <BlobImage
                     large
                     name={user.blobName}
+                    onClick={() => {
+                        setTab('profile');
+                    }}
                 />
             </div>
             <div className={styles.homeYooHolder}>

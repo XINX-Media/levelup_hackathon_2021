@@ -24,6 +24,7 @@ export default function BlobImage({
     tiny,
     gear,
     huge,
+    onClick,
 }) {
     const { user } = useContext(UserContext);
     let image;
@@ -68,14 +69,17 @@ export default function BlobImage({
         backgroundImage = null;
     }
     return (
-        <div className={classnames(
-            styles.blobMainImage,
-            large && styles.large,
-            small && styles.small,
-            tiny && styles.tiny,
-            huge && styles.huge,
-            onboarding && styles.onboarding,
-        )}>
+        <div 
+            className={classnames(
+                styles.blobMainImage,
+                large && styles.large,
+                small && styles.small,
+                tiny && styles.tiny,
+                huge && styles.huge,
+                onboarding && styles.onboarding,
+            )}
+            onClick={onClick}
+        >
             <img src={backgroundImage} />
             <img
                 className={classnames(

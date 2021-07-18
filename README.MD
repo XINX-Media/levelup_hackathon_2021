@@ -40,6 +40,14 @@ CREATE TABLE `user_standard_card` (
    `swipes` int(11) DEFAULT '0',
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `user_map_unlocks` (
+   `id` int(11) NOT NULL AUTO_INCREMENT,
+   `user_id` int(11) NOT NULL,
+   `x` int(11) NOT NULL,
+   `y` int(11) NOT NULL,
+   PRIMARY KEY (`id`)
+ ) ENGINE=MyISAM DEFAULT CHARSET=latin1
  ```
 
 Once you've created these tables, make a new file, `db.json` in the `/server` folder with this content:

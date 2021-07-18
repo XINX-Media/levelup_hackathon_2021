@@ -37,7 +37,7 @@ class CardTable extends DatabaseTable {
     }
 
     static async updateCard(id, changes) {
-        const card = this.getForId(id);
+        const card = await this.getForId(id);
         if (!card) {
             return null;
         }
@@ -50,7 +50,7 @@ class CardTable extends DatabaseTable {
     }
 
     static async deleteCard(user_id, card_id) {
-        const card = this.getForId(card_id);
+        const card = await this.getForId(card_id);
         if (!card) {
             return null;
         }

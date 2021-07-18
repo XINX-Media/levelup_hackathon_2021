@@ -167,3 +167,29 @@
     position: relative;
     margin-bottom: 30px;
 }
+
+.soothOuter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.soothTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 11px;
+    width: calc(100% - 88px);
+}
+
+.soothButton {
+    cursor: pointer;
+    width: 231px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    height: 77px;
+    box-shadow: 1.4px 2.8px 7px rgba(0, 0, 0, 0.25);
+    border-radius: 7px;
+}

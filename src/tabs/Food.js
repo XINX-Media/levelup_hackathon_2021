@@ -12,7 +12,7 @@ import AddCardModal from '../modals/AddCardModal';
 import styles from './styles.css';
 import mainStyles from '../styles.css';
 
-import { cards as publicCards } from '../config/cards';
+import { cards as standardCards } from '../config/cards';
 import HeartsContext from '../contexts/HeartsContext';
 
 export default function Food({ user, setTab }) {
@@ -23,6 +23,7 @@ export default function Food({ user, setTab }) {
     const [swipedCardAfter, setSwipedCardAfter] = useState(false);
     const { refreshHearts } = useContext(HeartsContext);
     const [modalOpen, setModalOpen] = useState(false);
+    const [filteredPublicCards, setFilteredPublicCards] = useState([]);
 
     useEffect(async () => {
         const result = await callApi("GET", "user/cards", {
@@ -31,8 +32,32 @@ export default function Food({ user, setTab }) {
         setCards(result.cards);
     }, [modalOpen]);
 
+    useEffect(async () => {
+        if (user && user.id) {
+            const result = await callApi("GET", "user/standard_card", { id: user.id });
+            const cardData = result.cards;
+
+            const dataByIndex = cardData.reduce((obj, data) => {
+                return {
+                    ...obj,
+                    [data.card_index]: data,
+                };
+            }, {});
+
+            setFilteredPublicCards(standardCards.filter((card, index) => {
+                const data = dataByIndex[index];
+
+                if (data.deleted) {
+                    return false;
+                }
+
+                return true;
+            }));
+        }
+    }, [user]);
+
     const allCards = [
-        ...publicCards,
+        ...filteredPublicCards,
         ...cards.map((card) => {
             return card.card_text;
         }),

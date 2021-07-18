@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require('./user');
 const Card = require('./card');
+const StandardCard = require('./standardCard');
 
 const router = express.Router();
 
@@ -231,5 +232,56 @@ router.put("/user/connect/give_heart", async (req, res) => {
         success: true,
     });
 });
+
+router.post("/user/standard_card", async (req, res) => {
+    const { user_id, card_index, easy, deleted } = req.body;
+
+    try {
+        const card = await StandardCard.getCardForUser(user_id, card_index);
+
+        if (card) {
+            const newCard = await StandardCard.updateCard(user_id, card_index, {
+                easy, deleted
+            });
+            res.json({
+                success: true,
+                card: newCard,
+            });
+            return;
+        }
+
+        const newCard = await StandardCard.addCard(user_id, card_index, easy, deleted);
+
+        res.json({
+            success: true,
+            card: newCard,
+        });
+    } catch (error) {
+        console.error(error);
+        res.json({
+            success: false,
+            message: error.message,
+        });
+    } 
+});
+
+router.get("/user/standard_card", async (req, res) => {
+    const { id } = req.query;
+
+    try {
+        const cards = await StandardCard.getCardsForUser(id);
+
+        res.json({
+            success: true,
+            cards,
+        });
+    } catch (error) {
+        console.error(error);
+        res.json({
+            success: false,
+            message: error.message,
+        });
+    }
+})
 
 module.exports = router;

@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 
 import styles from './styles.css';
 
-export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCards }) {
+import TrashIcon from '../assets/trash_icon.svg';
+
+export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCards, introCard, onDelete }) {
     const [rot, setRot] = useState(0);
     const [mouseDownCoord, setMouseDownCoord] = useState(null);
     const [activeCard, setActiveCard] = useState(0);
+    const [seenIntroCard, setSeenIntroCard] = useState(!introCard);
 
     const maxDeg = 45;
 
@@ -20,9 +23,13 @@ export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCar
 
     const changeRot = (newRot) => {
         if (Math.abs(newRot) >= maxDeg) {
-            swipeCard(activeCard, newRot < 0);
             setRot(0);
             setMouseDownCoord(null);
+            if (!seenIntroCard) {
+                setSeenIntroCard(true);
+                return;
+            }
+            swipeCard(activeCard, newRot < 0);
             const nextIndex = activeCard + 1;
             if (nextIndex >= cards.length) {
                 onOutOfCards();
@@ -34,7 +41,13 @@ export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCar
 
     let card = null;
     if (activeCard < cards.length) {
-        card = cards[activeCard];
+        card = <div className={styles.normalText} style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+            {cards[activeCard]}
+        </div>
+    }
+
+    if (!seenIntroCard) {
+        card = introCard;
     }
 
     return (
@@ -69,7 +82,7 @@ export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCar
                                     x: clientX,
                                     y: clientY,
                                 });
-                                e.preventDefault();
+                                //e.preventDefault();
                             }}
                             onMouseDown={(e) => {
                                 const { clientX, clientY } = e;
@@ -89,7 +102,7 @@ export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCar
                             }}
                             onTouchMove={(e) => {
                                 if (mouseDownCoord) {  
-                                    e.preventDefault();                    
+                                    //e.preventDefault();                    
                                     const { clientX, clientY } = e.changedTouches[0];
 
                                     const dist = Math.sqrt(Math.pow(mouseDownCoord.y - clientY, 2) + Math.pow(mouseDownCoord.x - clientX, 2));
@@ -115,6 +128,27 @@ export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCar
                             }}
                         >
                             {card}
+                            <div
+                                className={styles.cardSwipeDeletionContainer}
+                                onClick={() => {
+                                    setRot(0);
+                                    setMouseDownCoord(null);
+                                    if (!seenIntroCard) {
+                                        setSeenIntroCard(true);
+                                        return;
+                                    }
+                                    if (onDelete) {
+                                        onDelete(activeCard);
+                                    }
+                                    const nextIndex = activeCard + 1;
+                                    if (nextIndex >= cards.length) {
+                                        onOutOfCards();
+                                    }
+                                    setActiveCard(activeCard + 1);
+                                }}
+                            >
+                                <img src={TrashIcon} />
+                            </div>
                         </div>
                     </>
                 )}

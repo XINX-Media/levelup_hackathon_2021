@@ -70,8 +70,23 @@
 }
 
 .blobMainImage.small {
-	width: 89px;
-	height: 60px;
+	width: 122px;
+	height: 122px;
+}
+
+.blobMainImage.small .blobImageImage {
+	width: 75px;
+	height: 75px;
+}
+
+.blobMainImage.tiny {
+	width: 66px;
+	height: 66px;
+}
+
+.blobMainImage.tiny .blobImageImage {
+	width: 41px;
+	height: 41px;
 }
 
 .blobImageNameHolder {
@@ -258,6 +273,13 @@
 	opacity: 0.5;
 	z-index: 0;
 	top: 30px;
+}
+
+.cardSwipeDeletionContainer {
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	cursor: pointer;
 }
 
 

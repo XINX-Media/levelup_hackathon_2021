@@ -11,7 +11,7 @@ import SeptagonButtonBackground from '../assets/septagon_button_background.svg';
 import Modal from './Modal';
 import AddCardModal from './modals/AddCardModal';
 
-import { onboardingCards as cards } from './config/cards';
+import { cards } from './config/cards';
 
 import styles from './styles.css';
 
@@ -45,24 +45,30 @@ export default function OnboardingBlobFood({ user, setUser, goBack }) {
                                 marginLeft: '17px',
                             }}
                         >
-                            Skip
+                            Hard
                         </div>
                         <CardSwiper
                             height={220}
                             width={220}
                             cards={cards}
+                            introCard={ (
+                                <>
+                                    <div className={styles.instructions} style={{ fontSize: '16px', lineHeight: '19px' }}>
+                                        We’ll show you tasks. Swipe right if they’re easy. Swipe left if they’re hard. Delete them if you don’t need the task.
+                                    </div>
+                                    <div className={styles.instructions} style={{ marginTop: '21px', fontSize: '16px', lineHeight: '19px' }}>
+                                    These turn into food for your zood!
+                                    </div>
+                                </>
+                            )}
                             swipeCard={async (index, left) => {
-                                if (index === 0) {
-                                    // ignore instructions card
-                                    return;
-                                }
-                                /*const newCards = [
-                                    ...cards,
-                                ];
-                                console.log(newCards);
-                                newCards.splice(0, 1);
-                                console.log(newCards);
-                                setCards(newCards);*/
+                                const easy = !left;
+                                callApi('POST', 'user/standard_card', {
+                                    user_id: user.id,
+                                    card_index: index,
+                                    easy,
+                                    deleted: false
+                                });
                             }}
                             onOutOfCards={async () => {
                                 const result = await callApi('PATCH', 'user', {
@@ -74,6 +80,14 @@ export default function OnboardingBlobFood({ user, setUser, goBack }) {
                                 });
                                 setUser(result.user);
                             }}
+                            onDelete={(index) => {
+                                callApi('POST', 'user/standard_card', {
+                                    user_id: user.id,
+                                    card_index: index,
+                                    easy: null,
+                                    deleted: true,
+                                });
+                            }}
                         />
                         <div
                             className={styles.normalText}
@@ -81,7 +95,7 @@ export default function OnboardingBlobFood({ user, setUser, goBack }) {
                                 marginRight: '17px',
                             }}
                         >
-                            Add
+                            Easy
                         </div>
                     </div>
                     <div className={styles.onboardingBlobFoodBottom}>

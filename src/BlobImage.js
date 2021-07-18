@@ -4,6 +4,8 @@ import classnames from 'classnames';
 import styles from './styles.css';
 import BlobBackground from '../assets/blob_background.png';
 import BlobBackgroundLarge from '../assets/blob_background_large.png';
+import BlobBackgroundSmall from '../assets/blob_background_small.png';
+import BlobBackgroundTinyWhite from '../assets/blob_background_tiny_white.png';
 import UserContext from './contexts/UserContext';
 import blobs from './config/blobs';
 import ZoodNeutralOnboarding from '../assets/zoods/zood_neutral_onboarding.png';
@@ -19,6 +21,7 @@ export default function BlobImage({
     blobId,
     onboarding,
     plus,
+    tiny,
 }) {
     const { user } = useContext(UserContext);
     let image;
@@ -47,15 +50,27 @@ export default function BlobImage({
         image = ZoodNeutralPlus;
     }
 
+    let backgroundImage = BlobBackground;
+    if (large) {
+        backgroundImage = BlobBackgroundLarge;
+    }
+    if (small) {
+        backgroundImage = BlobBackgroundSmall;
+    }
+    if (tiny) {
+        backgroundImage = BlobBackgroundTinyWhite;
+    }
     return (
         <div className={classnames(
             styles.blobMainImage,
             large && styles.large,
             small && styles.small,
+            tiny && styles.tiny,
         )}>
-            <img src={large ? BlobBackgroundLarge : BlobBackground} />
+            <img src={backgroundImage} />
             <img
                 className={classnames(
+                    styles.blobImageImage,
                     !large && styles.wrappedImage,
                     large && styles.wrappedImageSmaller,
                 )}

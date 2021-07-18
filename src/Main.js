@@ -7,11 +7,12 @@ import Mood from './tabs/Mood';
 import Profile from './tabs/Profile';
 import FoodSettings from './tabs/FoodSettings';
 import Zoodies from './tabs/Zoodies';
-import ZoodiesFoodies from './tabs/ZoodiesFoodies';
 import { useSearch } from './utils';
+import Sooth from './tabs/Sooth';
+import ReframeGame from './games/ReframeGame';
 
 export default function Main({ user }) {
-	const [tab, setTab] = useState('profile');
+	const [tab, setTab] = useState('home');
     const { search, updateSearch } = useSearch();
 
     const doSetTab = (newTab) => {
@@ -62,6 +63,14 @@ export default function Main({ user }) {
         />
     } else if (tab === "zoodies") {
         return <Zoodies
+            setTab={doSetTab}
+        />
+    } else if (tab === "sooth") {
+        return <Sooth
+            setTab={doSetTab}
+        />
+    } else if (tab === "reframe_game") {
+        return <ReframeGame
             setTab={doSetTab}
         />
     }

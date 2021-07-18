@@ -23,6 +23,19 @@ export function HeartsProvider({ children }) {
         }
     }
 
+    // demo code
+    /*useEffect(() => {
+        const interval = setInterval(() => {
+            setHearts((hearts) => {
+                return 166;//hearts + 25;
+            });
+        }, 200);
+
+        return () => {
+            clearInterval(interval);
+        }
+    }, []);*/
+
 	useEffect(async () => {
 		refreshHearts();
 	}, [user]);

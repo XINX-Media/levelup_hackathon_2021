@@ -82,7 +82,7 @@ class DatabaseTable {
             params.push(value);
             return `${key} = ?`;
         });
-        query += searchList.join(' ');
+        query += searchList.join(' AND ');
 
         query = mysql.format(query, params);
         const promise = new Promise((resolve, reject) => {

@@ -27,12 +27,13 @@ export default function TabWrapper({
                 <div className={styles.tabWrapperNavInner}>
                     <div
                         style={{
-                            marginTop: '-10px',
+                            marginTop: '0px',
                             visibility: onLeftClicked ? 'visible' : 'hidden',
                         }}
                     >
                         <IconButton
-                            width={35}
+                            width={45}
+                            top={-5}
                             icon={leftIcon || ButtonArrowLeft}
                             backgroundIcon={SeptagonButtonBackground}
                             onClick={onLeftClicked}
@@ -40,12 +41,13 @@ export default function TabWrapper({
                     </div>
                     <div
                         style={{
-                            marginTop: '-10px',
+                            marginTop: '0px',
                             visibility: onMiddleClicked ? 'visible' : 'hidden',
                         }}
                     >
                         <IconButton
-                            width={35}
+                            width={45}
+                            top={-5}
                             icon={middleIcon || PlusButtonIcon}
                             backgroundIcon={SeptagonButtonBackground}
                             onClick={onMiddleClicked}
@@ -53,12 +55,13 @@ export default function TabWrapper({
                     </div>
                     <div
                         style={{
-                            marginTop: '-10px',
+                            marginTop: '0px',
                             visibility: onRightClicked ? 'visible' : 'hidden',
                         }}
                     >
                         <IconButton
-                            width={35}
+                            width={45}
+                            top={-5}
                             icon={rightIcon || ButtonArrowRight}
                             backgroundIcon={SeptagonButtonBackground}
                             onClick={onRightClicked}

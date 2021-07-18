@@ -5,9 +5,7 @@ import BlobImage from '../BlobImage';
 import CardSwiperTop from '../CardSwiperTop';
 import StackedHearts from '../components/StackedHearts';
 import GearIcon from '../../assets/gear_icon.svg';
-import TabWrapper from '../components/TabWrapper'
-import Modal from '../Modal';
-import AddCardModal from '../modals/AddCardModal';
+import TabWrapperStandard from '../components/TabWrapperStandard'
 
 import styles from './styles.css';
 import mainStyles from '../styles.css';
@@ -22,15 +20,18 @@ export default function Food({ user, setTab }) {
     const [swipedCardProgress, setSwipedCardProgress] = useState(0);
     const [swipedCardAfter, setSwipedCardAfter] = useState(false);
     const { refreshHearts } = useContext(HeartsContext);
-    const [modalOpen, setModalOpen] = useState(false);
     const [filteredPublicCards, setFilteredPublicCards] = useState([]);
 
-    useEffect(async () => {
+    const refreshCards = async () => {
         const result = await callApi("GET", "user/cards", {
             user_id: user.id,
         });
         setCards(result.cards);
-    }, [modalOpen]);
+    }
+
+    useEffect(() => {
+        refreshCards();
+    }, []);
 
     useEffect(async () => {
         if (user && user.id) {
@@ -102,19 +103,12 @@ export default function Food({ user, setTab }) {
     }, [swipedCardAfter]);
 
     return (
-        <TabWrapper
-            onMiddleClicked={() => {
-                setModalOpen(true);
+        <TabWrapperStandard
+            showAddCard
+            setTab={setTab}
+            onRefreshCards={() => {
+                refreshCards();
             }}
-            modal={modalOpen && (
-                <Modal>
-                    <AddCardModal
-                        close={() => {
-                            setModalOpen(false);
-                        }}
-                    />
-                </Modal>
-            )}
         >
             <div className={styles.foodOuter}>
                 <div className={styles.foodHeartsContainer}>
@@ -164,7 +158,6 @@ export default function Food({ user, setTab }) {
                         cards={allText}
                         swipeCard={async (index) => {
                             const card = allCards[index];
-                            console.log(card);
                             if (card.card_index === undefined) {
                                 await callApi("PATCH", "card", {
                                     id: card.id,
@@ -193,6 +186,6 @@ export default function Food({ user, setTab }) {
                     />
                 </div>
             </div>
-        </TabWrapper>
+        </TabWrapperStandard>
     )
 }

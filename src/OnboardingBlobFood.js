@@ -98,7 +98,7 @@ export default function OnboardingBlobFood({ user, setUser, goBack }) {
                             Easy
                         </div>
                     </div>
-                    <div className={styles.onboardingBlobFoodBottom}>
+                    {/*<div className={styles.onboardingBlobFoodBottom}>
                         <div className={styles.onboardingBlobFoodBottomInner}>
                             <div
                                 className={styles.onboardingBlobFoodButton}
@@ -140,7 +140,7 @@ export default function OnboardingBlobFood({ user, setUser, goBack }) {
                         >
                             Add card
                         </div>
-                    </div>
+                    </div>*/}
                 </div>
                 {showModal && (
                     <Modal>

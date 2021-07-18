@@ -1,4 +1,7 @@
 function getBaseUrl() {
+    if (window.location.origin === "http://localhost:3000") {
+        return "http://localhost:8080";
+    }
     return window.location.origin;
 }
 

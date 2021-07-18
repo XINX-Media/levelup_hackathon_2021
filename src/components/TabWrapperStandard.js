@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import TabWrapper from './TabWrapper';
 import FoodButtonIcon from '../../assets/food_button_icon.svg';
 import WooButtonIcon from '../../assets/woo_button_icon.svg';
 import ZoodNeutralSmile from '../../assets/zoods/zood_neutral_smile.png';
+import Modal from '../Modal';
+import AddCardModal from '../modals/AddCardModal';
+import PlusButtonIcon from '../../assets/plus_button_icon.svg';
 
-export default function TabWrapperStandard({ children, setTab }) {
+export default function TabWrapperStandard({ children, setTab, showAddCard, onRefreshCards }) {
+    const [modalOpen, setModalOpen] = useState(false);
+
     return (
         <TabWrapper
             onMiddleClicked={() => {
@@ -15,11 +20,27 @@ export default function TabWrapperStandard({ children, setTab }) {
                 setTab('map');
             }}
             onRightClicked={() => {
-                setTab('food');
+                if (!showAddCard) {
+                    setTab('food');
+                } else {
+                    setModalOpen(true);
+                }
             }}
             leftIcon={WooButtonIcon}
             middleIcon={ZoodNeutralSmile}
-            rightIcon={FoodButtonIcon}
+            rightIcon={showAddCard ? PlusButtonIcon : FoodButtonIcon}
+            modal={modalOpen && (
+                <Modal>
+                    <AddCardModal
+                        close={() => {
+                            setModalOpen(false);
+                            if (onRefreshCards) {
+                                onRefreshCards();
+                            }
+                        }}
+                    />
+                </Modal>
+            )}
         >
             {children}
         </TabWrapper>

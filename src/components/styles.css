@@ -100,7 +100,7 @@
     height: 50px;
     flex-shrink: 0;
     position: relative;
-    background-color: #f9e5ee;
+    background-color: #ece5eb;
     display: flex;
     justify-content: center;
     z-index: 4;
@@ -111,7 +111,7 @@
     display: flex;
     justify-content: space-between;
     position: absolute;
-    top: -25px;
+    top: -3px;
 }
 
 .textPillOuter {

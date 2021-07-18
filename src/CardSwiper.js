@@ -10,7 +10,7 @@ export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCar
     const [activeCard, setActiveCard] = useState(0);
     const [seenIntroCard, setSeenIntroCard] = useState(!introCard);
 
-    const maxDeg = 45;
+    const maxDeg = 30;
 
     useEffect(() => {
         setRot(0);

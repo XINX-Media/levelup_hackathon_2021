@@ -9,7 +9,7 @@ import BlobImage from './BlobImage';
 
 import styles from './styles.css';
 
-export default function OnboardingBlob({ user, setUser, onForward }) {
+export default function OnboardingBlob({ user, setUser }) {
     const [blob, setBlob] = useState(user.blobColor || '');
     const [blobName, setBlobName] = useState(user.blobName || '');
     return (
@@ -90,7 +90,6 @@ export default function OnboardingBlob({ user, setUser, onForward }) {
                         if (blob === '' || blobName === '') {
                             return;
                         }
-                        onForward();
                         const result = await callApi('PATCH', 'user', {
                             identifier: user.identifier,
                             changes: {

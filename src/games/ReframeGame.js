@@ -38,11 +38,11 @@ const words = [
 
 export default function ReframeGame({ setTab }) {
     const [tempPhraseIndex, setTempPhraseIndex] = useState(null);
-    const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+    const [currentPhraseIndex, setCurrentPhraseIndex] = useState(null);
     const [gameText, setGameText] = useState('');
     const { user, setUser } = useContext(UserContext);
-    const [onboardingStep, setOnboardingStep] = useState(1);
-    const [showWin, setShowWin] = useState(true);
+    const [onboardingStep, setOnboardingStep] = useState(0);
+    const [showWin, setShowWin] = useState(false);
 
     if (!user.hasOnboardedReframe) {
         if (onboardingStep === 0) {

@@ -6,7 +6,7 @@ import OnboardingStepOne from './OnboardingStepOne';
 import OnboardingStepTwo from './OnboardingStepTwo';
 
 export default function Onboarding({ user, setUser }) {
-    const [step, setStep] = useState(2);
+    const [step, setStep] = useState(0);
 
     useEffect(() => {
         if (user.blobColor) {

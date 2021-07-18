@@ -31,7 +31,7 @@ export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCar
             }
             swipeCard(activeCard, newRot < 0);
             const nextIndex = activeCard + 1;
-            if (nextIndex >= cards.length) {
+            if (nextIndex >= cards.length && onOutOfCards) {
                 onOutOfCards();
             }
             setActiveCard(activeCard + 1);
@@ -141,7 +141,7 @@ export default function CardSwiper({ cards, swipeCard, height, width, onOutOfCar
                                         onDelete(activeCard);
                                     }
                                     const nextIndex = activeCard + 1;
-                                    if (nextIndex >= cards.length) {
+                                    if (nextIndex >= cards.length && onOutOfCards) {
                                         onOutOfCards();
                                     }
                                     setActiveCard(activeCard + 1);
